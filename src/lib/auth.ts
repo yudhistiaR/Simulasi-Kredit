@@ -11,5 +11,16 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  plugins: [tanstackStartCookies(), admin(), username()],
+  trustedOrigins: ["http://192.168.11.33:3000"],
+  plugins: [
+    tanstackStartCookies(),
+    admin({
+      adminUserIds: ["VbJiHdxNyiqGLyWxZvAW0nZ5cMuTvr24"], // TODO: nanti di hapus yaw
+      adminRoles: "admin",
+      defaultRole: "account_officer",
+    }),
+    username(),
+  ],
 });
+
+export type Session = typeof auth.$Infer.Session;

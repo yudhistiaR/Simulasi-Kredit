@@ -1,37 +1,20 @@
-import { PrismaClient } from '../src/generated/prisma/client.js'
-
-import { PrismaMariaDb } from '@prisma/adapter-mariadb'
-const adapter = new PrismaMariaDb({
-  host: 'localhost',
-  port: 3306,
-  connectionLimit: 5,
-})
-
-const prisma = new PrismaClient({ adapter })
+import { prisma } from "#/db"
 
 async function main() {
-  console.log('🌱 Seeding database...')
 
-  // Clear existing todos
-  await prisma.todo.deleteMany()
+  await prisma.user.upsert({
+    where: { email: "superadmin@domain.com" },
+    update: {},
+    create: {
+      name: "Kazum Admin",
+      email: "superadmin@domain.com",
+      password: "123",
+      role: "admin", // Langsung set sebagai admin di DB
+      emailVerified: true,
+    },
+  });
 
-  // Create example todos
-  const todos = await prisma.todo.createMany({
-    data: [
-      { title: 'Buy groceries' },
-      { title: 'Read a book' },
-      { title: 'Workout' },
-    ],
-  })
-
-  console.log(`✅ Created ${todos.count} todos`)
+  console.log("User pertama berhasil dibuat!");
 }
 
-main()
-  .catch((e) => {
-    console.error('❌ Error seeding database:', e)
-    process.exit(1)
-  })
-  .finally(async () => {
-    await prisma.$disconnect()
-  })
+main();

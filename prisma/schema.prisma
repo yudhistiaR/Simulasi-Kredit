@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -8,6 +7,7 @@ datasource db {
   provider = "mysql"
 }
 
+// Better Auth Scheme 
 model User {
   id              String    @id
   name            String    @db.Text
@@ -24,6 +24,12 @@ model User {
   displayUsername String?   @db.Text
   sessions        Session[]
   accounts        Account[]
+
+  permohonanPetugas   PermohonanKredit[] @relation("PetugasRelation")
+  permohonanReferral  PermohonanKredit[] @relation("ReferralRelation")
+  
+  // Relasi baru untuk pencatatan tanda tangan persetujuan komite
+  persetujuanKomite  PersetujuanKreditKomite[]
 
   @@unique([email])
   @@unique([username])
@@ -77,4 +83,655 @@ model Verification {
 
   @@index([identifier(length: 191)])
   @@map("verification")
+}
+// Better Auth Scheme end 
+model InformasiUmum {
+  id                 String            @id @default(uuid())
+  namaBank           String            @db.VarChar(150)
+  kantor             String            @db.VarChar(150)
+  hari               String            @db.VarChar(15)
+  tanggalProses      DateTime          @db.Date
+  jenisPemohon       String            @db.VarChar(50)
+  keterkaitanPemohon String            @db.VarChar(100)
+  statusNasabah      String            @db.VarChar(100)
+  permohonanKredit   PermohonanKredit?
+
+  @@map("informasi_umum")
+}
+
+// ==========================================
+// 2. TABEL INDUK UTAMA (PERMOHONAN KREDIT)
+// ==========================================
+
+model PermohonanKredit {
+  id                  String           @id @default(uuid())
+  informasiUmumId     String           @unique
+  informasiUmum       InformasiUmum    @relation(fields: [informasiUmumId], references: [id], onDelete: Cascade)
+  petugasId           String
+  petugas             User             @relation("PetugasRelation", fields: [petugasId], references: [id])
+  referralId          String
+  referral            User             @relation("ReferralRelation", fields: [referralId], references: [id])
+  tanggalProsesDetail DateTime         @db.Date
+  statusPermohonan    String           @db.VarChar(50)
+  plafondPermohonan   Decimal          @db.Decimal(15, 2)
+  bungaRatePertahun   Decimal          @db.Decimal(5, 2)
+  setaraBungaEffektif Decimal          @db.Decimal(5, 2)
+  jenisPembayaran     String           @db.VarChar(100)
+  tujuan              String           @db.Text
+  skemaBank           String           @db.VarChar(100)
+  jenisFasilitas      String           @db.VarChar(150)
+  jangkaWaktuBulan    Int
+  jangkaWaktuTahun    Int
+  angsuranPerbulan    Decimal          @db.Decimal(15, 2)
+  penggunaanDana      String           @db.VarChar(255)
+  detailPenggunaan    String           @db.Text
+  profilKepesertaan   String?          @db.Text
+
+  // Relasi Modul 5C & Analisis Fisik
+  calonDebitur        CalonDebitur?
+  laporanSlik         LaporanSlik?
+  kondisiEkonomi      KondisiEkonomi?
+  capitalAsset        CapitalAsset?
+  capacityKerja       CapacityKerja?
+  analisaKeuangan     AnalisaKeuangan?
+  verifikasiDebitur   VerifikasiDebitur?
+  penilaianKonsolidasi PenilaianKonsolidasi?
+  collateral          Collateral[]
+  bmpk                Bmpk?
+  laporanSurvey       LaporanSurvey?
+  beritaAcaraDeviasi  BeritaAcaraDeviasi?
+
+  // ==============================================================================
+  // RELASI BARU: Hasil Keputusan, Syarat, & Detail Pencairan (Halaman 24-27)
+  // ==============================================================================
+  keputusanKomiteFinal KeputusanKomiteFinal?
+  strukturFasilitasSetuju StrukturFasilitasDisetujui?
+  syaratPencairanKredit SyaratPencairanKredit[]
+
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+
+  @@map("permohonan_kredit")
+}
+
+// ==========================================
+// 3. MODUL DATA NASABAH & KARAKTER
+// ==========================================
+model CalonDebitur {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String           @unique
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+  nama                  String           @db.VarChar(150)
+  statusKawin           String           @db.VarChar(30)
+  identitas             String           @db.VarChar(20)
+  nomorIdentitas        String           @db.VarChar(30)
+  tempatLahir           String           @db.VarChar(100)
+  tanggalLahir          DateTime         @db.Date
+  usiaMasaProses        String           @db.VarChar(50)
+  agama                 String           @db.VarChar(30)
+  alamatIdentitas       String           @db.Text
+  statusTempatTinggalId String           @db.VarChar(50)
+  alamatTinggalSaatIni  String           @db.Text
+  statusTempatTinggalSt String           @db.VarChar(50)
+  pekerjaanProfesi      String           @db.VarChar(100)
+  nomorTelepon          String           @db.VarChar(25)
+  masaBerlakuIdentitas  String           @db.VarChar(50)
+  namaIbuKandung        String           @db.VarChar(150)
+  email                 String?          @db.VarChar(100)
+  tingkatPendidikan     String           @db.VarChar(50)
+  tipePendapatan        String           @db.VarChar(50)
+  npwp                  String?          @db.VarChar(30)
+  analisisLatarBelakang String?          @db.Text
+  catatanReviewer       String?          @db.Text
+
+  karakter              KarakterDebitur?
+  pasangan              PasanganDebitur?
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+
+  @@map("calon_debitur")
+}
+
+model PasanganDebitur {
+  id                    String          @id @default(uuid())
+  calonDebiturId        String          @unique
+  calonDebitur          CalonDebitur    @relation(fields: [calonDebiturId], references: [id], onDelete: Cascade)
+  nama                  String          @db.VarChar(150)
+  statusKawin           String          @db.VarChar(30)
+  identitas             String          @db.VarChar(20)
+  nomorIdentitas        String          @db.VarChar(30)
+  tempatLahir           String          @db.VarChar(100)
+  tanggalLahir          DateTime        @db.Date
+  usiaMasaProses        String          @db.VarChar(50)
+  agama                 String          @db.VarChar(30)
+  alamatIdentitas       String          @db.Text
+  alamatTinggalSaatIni  String          @db.Text
+  pekerjaanProfesi      String          @db.VarChar(100)
+  nomorTelepon          String?         @db.VarChar(25)
+  masaBerlakuIdentitas  String          @db.VarChar(50)
+  namaIbuKandung        String          @db.VarChar(150)
+  email                 String?         @db.VarChar(100)
+  tingkatPendidikan     String          @db.VarChar(50)
+  tipePendapatan        String          @db.VarChar(50)
+  karakter              KarakterPasangan?
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@map("pasangan_debitur")
+}
+
+model KarakterDebitur {
+  id                     String       @id @default(uuid())
+  calonDebiturId         String       @unique
+  calonDebitur           CalonDebitur @relation(fields: [calonDebiturId], references: [id], onDelete: Cascade)
+  iktikadKewajibanTxt    String       @db.VarChar(50)
+  iktikadKewajibanVal    Int
+  motivasiBekerjaTxt     String       @db.VarChar(50)
+  motivasiBekerjaVal     Int
+  tingkatKepatuhanTxt    String       @db.VarChar(50)
+  tingkatKepatuhanVal    Int
+  pendalamanPekerjaanTxt String       @db.VarChar(50)
+  pendalamanPekerjaanVal Int
+  managementResikoTxt    String       @db.VarChar(50)
+  managementResikoVal    Int
+  hubunganPihakLainTxt   String       @db.VarChar(50)
+  hubunganPihakLainVal   Int
+  pendalamanAgamaTxt     String       @db.VarChar(50)
+  pendalamanAgamaVal     Int
+  keharmonisanKeluargaTxt String      @db.VarChar(50)
+  keharmonisanKeluargaVal Int
+  aktivitasSosialTxt     String       @db.VarChar(50)
+  aktivitasSosialVal     Int
+  aktivitasKerjaTxt      String       @db.VarChar(50)
+  aktivitasKerjaVal      Int
+
+  @@map("karakter_debitur")
+}
+
+model KarakterPasangan {
+  id                     String          @id @default(uuid())
+  pasanganDebiturId      String          @unique
+  pasanganDebitur        PasanganDebitur @relation(fields: [pasanganDebiturId], references: [id], onDelete: Cascade)
+  iktikadKewajibanTxt    String          @db.VarChar(50)
+  iktikadKewajibanVal    Int
+  motivasiBekerjaTxt     String          @db.VarChar(50)
+  motivasiBekerjaVal     Int
+  tingkatKepatuhanTxt    String          @db.VarChar(50)
+  tingkatKepatuhanVal    Int
+  pendalamanPekerjaanTxt String          @db.VarChar(50)
+  pendalamanPekerjaanVal Int
+  managementResikoTxt    String          @db.VarChar(50)
+  managementResikoVal    Int
+  hubunganPihakLainTxt   String          @db.VarChar(50)
+  hubunganPihakLainVal   Int
+  pendalamanAgamaTxt     String          @db.VarChar(50)
+  pendalamanAgamaVal     Int
+  keharmonisanKeluargaTxt String         @db.VarChar(50)
+  keharmonisanKeluargaVal Int
+  aktivitasSosialTxt     String          @db.VarChar(50)
+  aktivitasSosialVal     Int
+  aktivitasKerjaTxt      String          @db.VarChar(50)
+  aktivitasKerjaVal      Int
+
+  @@map("karakter_pasangan")
+}
+
+// ==========================================
+// 4. MODUL SLIK OJK & KONDISI EKONOMI
+// ==========================================
+
+model LaporanSlik {
+  id                       String                 @id @default(uuid())
+  permohonanKreditId       String                 @unique
+  permohonanKredit         PermohonanKredit       @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+  hari                     String                 @db.VarChar(15)
+  ditarikPadaTanggal       DateTime               @db.Date
+  analisisKreditIntro      String?                @db.Text
+  narasiPinjamanBpr        String?
+  totalPlafonBpr           Decimal                @default(0) @db.Decimal(15, 2)
+  totalBakiDebetBpr        Decimal                @default(0) @db.Decimal(15, 2)
+  totalAngsuranBpr         Decimal                @default(0) @db.Decimal(15, 2)
+  catatanPinjamanBpr       String?                @db.Text
+  narasiFasilitasSlik      String?                @db.Text
+  totalPlafonSlik          Decimal                @default(0) @db.Decimal(15, 2)
+  totalBakiDebetSlik       Decimal                @default(0) @db.Decimal(15, 2)
+  totalAngsuranSlik        Decimal                @default(0) @db.Decimal(15, 2)
+  catatanFasilitasSlik     String?                @db.Text
+  kesimpulanKolektibilitas String?                @db.Text
+  rekomendasiReviewerSlik  String?                @db.Text
+  pinjamanAktifBpr         SlikPinjamanAktifBpr[]
+  pinjamanLunasBpr         SlikPinjamanLunasBpr[]
+  fasilitasSlik            SlikFasilitasSlik[]
+  fasilitasDihapus         SlikFasilitasDihapus[]
+  createdAt                DateTime               @default(now())
+  updatedAt                DateTime               @updatedAt
+
+  @@map("laporan_slik")
+}
+
+model SlikPinjamanAktifBpr {
+  id              String      @id @default(uuid())
+  laporanSlikId   String
+  laporanSlik     LaporanSlik @relation(fields: [laporanSlikId], references: [id], onDelete: Cascade)
+  nama            String      @db.VarChar(150)
+  tglRealisasi    DateTime    @db.Date
+  tglJatuhTempo   DateTime    @db.Date
+  kolektibilitas  String      @db.VarChar(50)
+  keterangan      String?     @db.VarChar(100)
+  plafon          Decimal     @db.Decimal(15, 2)
+  bakiDebet       Decimal     @db.Decimal(15, 2)
+  tenor           Int
+  rate            Decimal     @db.Decimal(5, 2)
+  angsuranBulan   Decimal     @db.Decimal(15, 2)
+  jenisPembayaran String      @db.VarChar(100)
+  kondisi         String?     @db.VarChar(100)
+
+  @@map("slik_pinjaman_aktif_bpr")
+}
+
+model SlikPinjamanLunasBpr {
+  id              String      @id @default(uuid())
+  laporanSlikId   String
+  laporanSlik     LaporanSlik @relation(fields: [laporanSlikId], references: [id], onDelete: Cascade)
+  nama            String      @db.VarChar(150)
+  tglRealisasi    DateTime    @db.Date
+  tglJatuhTempo   DateTime    @db.Date
+  kolektibilitas  String      @db.VarChar(50)
+  keterangan      String?     @db.VarChar(100)
+  plafon          Decimal     @db.Decimal(15, 2)
+  bakiDebet       Decimal     @db.Decimal(15, 2)
+  tenor           Int
+  rate            Decimal     @db.Decimal(5, 2)
+  angsuranBulan   Decimal     @db.Decimal(15, 2)
+  jenisPembayaran String      @db.VarChar(100)
+  kondisi         String?     @db.VarChar(100)
+
+  @@map("slik_pinjaman_lunas_bpr")
+}
+
+model SlikFasilitasSlik {
+  id              String      @id @default(uuid())
+  laporanSlikId   String
+  laporanSlik     LaporanSlik @relation(fields: [laporanSlikId], references: [id], onDelete: Cascade)
+  namaNasabah     String      @db.VarChar(150)
+  namaBank        String      @db.VarChar(150)
+  tglRealisasi    DateTime    @db.Date
+  tglJatuhTempo   DateTime    @db.Date
+  jenisKredit     String      @db.VarChar(100)
+  plafon          Decimal     @db.Decimal(15, 2)
+  bakiDebet       Decimal     @db.Decimal(15, 2)
+  tenor           Int
+  rate            Decimal     @db.Decimal(5, 2)
+  angsuran        Decimal     @db.Decimal(15, 2)
+  kolektibilitas  String      @db.VarChar(50)
+  jenisPembayaran String      @db.VarChar(100)
+
+  @@map("slik_fasilitas_lik")
+}
+
+model SlikFasilitasDihapus {
+  id              String      @id @default(uuid())
+  laporanSlikId   String
+  laporanSlik     LaporanSlik @relation(fields: [laporanSlikId], references: [id], onDelete: Cascade)
+  namaNasabah     String      @db.VarChar(150)
+  namaBank        String      @db.VarChar(150)
+  tglRealisasi    DateTime    @db.Date
+  tglJatuhTempo   DateTime    @db.Date
+  jenisKredit     String      @db.VarChar(100)
+  plafon          Decimal     @db.Decimal(15, 2)
+  bakiDebet       Decimal     @db.Decimal(15, 2)
+  tenor           Int
+  rate            Decimal     @db.Decimal(5, 2)
+  kondisi         String?     @db.VarChar(100)
+  kolektibilitas  String      @db.VarChar(50)
+  jenisPembayaran String      @db.VarChar(100)
+
+  @@map("slik_fasilitas_dihapus")
+}
+
+model KondisiEkonomi {
+  id                          String           @id @default(uuid())
+  permohonanKreditId          String           @unique
+  permohonanKredit            PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+  sumberStabilitasPenghasilan String           @db.Text
+  debtToIncomeRatio           String           @db.Text
+  kondisiEkonomiMakro         String           @db.Text
+  riwayatSkorKredit           String           @db.Text
+  dampakSosialMasyarakat      String           @db.VarChar(50)
+  dampakEkonomiMikro          String           @db.VarChar(50)
+  dampakEkonomiMakro          String           @db.VarChar(50)
+  dampakLingkungan            String           @db.VarChar(50)
+  kebijakanPemerintah         String           @db.VarChar(50)
+  ekonomiGlobal               String           @db.VarChar(50)
+
+  @@map("kondisi_ekonomi")
+}
+
+// ==============================================================================
+// 5. MODUL BARU: CAPITAL / ASSET & KESIMPULAN STRUKTUR (Page 8)
+// ==============================================================================
+
+model CapitalAsset {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String           @unique
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+  
+  // Rincian Nilai Investasi Properti & Aset Bergerak
+  nilaiTanahBangunan    Decimal          @default(0) @db.Decimal(15, 2) // Rp 255.000.000
+  penyusutanTanahBangunan Decimal        @default(0) @db.Decimal(15, 2) // Rp 12.750.000
+  nilaiKendaraan        Decimal          @default(0) @db.Decimal(15, 2) // Rp 125.536.667
+  penyusutanKendaraan   Decimal          @default(0) @db.Decimal(15, 2)
+  nilaiMebelair         Decimal          @default(0) @db.Decimal(15, 2) // Rp 19.950.000
+  penyusutanMebelair    Decimal          @default(0) @db.Decimal(15, 2)
+  totalNilaiPasarAset   Decimal          @default(0) @db.Decimal(15, 2) // Rp 400.486.667
+  totalPenyusutanPertahun Decimal        @default(0) @db.Decimal(15, 2) // Rp 40.351.083
+  
+  // Ringkasan Evaluasi 5C Komprehensif
+  narasiSumberStabilitas String          @db.Text
+  narasiRepaymentCapacity String         @db.Text
+  narasiKarakterRiwayat   String         @db.Text
+  narasiFaktorEksternal   String         @db.Text
+  
+  // Kesimpulan Risiko Finansial & Kelayakan
+  integrasiProfilRisiko String           @db.VarChar(50)  // Contoh: "Moderat-Rendah (Terkendali)"
+  rekomendasiKelayakan  String           @db.Text         // Kesimpulan akhir "Layak" dsb.
+
+  @@map("capital_asset")
+}
+
+// ==============================================================================
+// 6. MODUL BARU: CAPACITY & PROFIL TEMPAT KERJA (Page 9-10)
+// ==============================================================================
+
+model CapacityKerja {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String           @unique
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+  
+  // Profil Jabatan Instansi
+  jabatanDebitur        String           @db.VarChar(100) // General Manager (GM) 1
+  levelGrade            String           @db.VarChar(100) // Senior Manager
+  statusKepegawaian     String           @db.VarChar(50)  // Pegawai Tetap
+  tanggalAwalBekerja    DateTime         @db.Date
+  masaKerjaNarasi       String           @db.VarChar(50)  // 6 Tahun 2 Bulan 6 Hari
+  
+  // Legalitas Kepegawaian (SK / Kontrak)
+  nomorKeteranganKerja  String?          @db.VarChar(100) // 034/LFN/SKR/VI/20205
+  tanggalSuratKeterangan DateTime?       @db.Date
+  nomorCorporateGuarantee String?        @db.VarChar(100)
+  
+  // Profil Badan Usaha Pemberi Kerja
+  namaPerusahaan        String           @db.VarChar(150) // CV Lintas Fortuna Nusantara
+  jenisBadanUsaha       String           @db.VarChar(50)  // Commanditaire Vennootschap
+  sektortUsaha          String           @db.VarChar(100) // Jasa Angkutan Darat Batubara/Sawit
+  jumlahKaryawan        Int              @default(0)      // 836 Orang
+  skalaLingkupUsaha     String           @db.VarChar(100) // Nasional/Antar Daerah
+  
+  // Analisis Risiko Usaha & Karir Masa Depan
+  analisisKarierRekam   String           @db.Text
+  analisisKeberlanjutan String           @db.Text
+  analisisRisikoInternal String          @db.Text
+  prospekKenaikanGaji   String           @db.Text
+
+  @@map("capacity_kerja")
+}
+
+// ==============================================================================
+// 7. MODUL BARU: ANALISA STRUKTUR PENDAPATAN HISTORIS (Page 12)
+// ==============================================================================
+
+model AnalisaKeuangan {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String           @unique
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+  
+  // Analisis Tren Finansial 3 Bulan Terakhir
+  tipePendapatanCore    String           @db.VarChar(50)  // Pure Fixed Income (100%)
+  gajiPokokStabil       Decimal          @db.Decimal(15, 2) // Rp 28.507.343
+  tunjanganJabatanMaret Decimal          @db.Decimal(15, 2)
+  tunjanganJabatanApril Decimal          @db.Decimal(15, 2)
+  tunjanganJabatanMei   Decimal          @db.Decimal(15, 2) // Rp 35.000.000 (Mengalami kenaikan)
+  insentifTetapFixed    Decimal          @db.Decimal(15, 2) // Rp 500.000
+  positionIncentives    Decimal          @db.Decimal(15, 2) // Rp 11.967.878
+  
+  // Rekap Potongan & Pendapatan Bersih (Take Home Pay)
+  potonganBpjsTk        Decimal          @default(0) @db.Decimal(15, 2)
+  potonganBpjsKes       Decimal          @default(0) @db.Decimal(15, 2)
+  rataRataTakeHomePay   Decimal          @db.Decimal(15, 2) // Rp 66.666.667
+  
+  // Kualifikasi Risiko Likuiditas Bank
+  kualitasPendapatanTxt String           @db.VarChar(100) // "Kualitas Pendapatan Prima"
+  ruangLikuiditasMembayar String         @db.VarChar(50)  // "Sangat Longgar / Layak"
+
+  @@map("analisa_keuangan")
+}
+
+// ==============================================================================
+// 8. MODUL BARU: VERIFIKASI REKAM JEJAK / TRADE & TRACK (Page 14)
+// ==============================================================================
+
+model VerifikasiDebitur {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String           @unique
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+  
+  // Informan Verifikasi Pihak Ketiga (HRD / Direksi)
+  namaVerifikator       String           @db.VarChar(150) // Fuji Kabul Prayetno
+  jabatanVerifikator    String           @db.VarChar(100) // ACT. HR Superintendent
+  nomorTeleponVerifikator String         @db.VarChar(25)  // 081348545787
+  metodeKonfirmasi      String           @db.VarChar(50)  // Telepon
+  
+  // Indikator Hasil Konfirmasi Kepegawaian
+  durasiHubunganKerja   String           @db.VarChar(30)  // "> 2 Tahun"
+  kinerjaProfesional    String           @db.VarChar(50)  // "Baik"
+  karakterDisiplin      String           @db.VarChar(50)  // "Baik"
+  tingkatKepatuhanHukum String           @db.VarChar(50)  // "Patuh"
+  statusMenguntungkanCo String           @db.VarChar(10)  // "Ya"
+  
+  // Kesimpulan Karakter & Kepatuhan Kerja
+  kesimpulanRisikoKarier String          @db.Text
+  korelasiKarakterKredit String          @db.Text
+
+  @@map("verifikasi_debitur")
+}
+
+// ==============================================================================
+// 9. MODUL BARU: PENILAIAN KONSOLIDASI & KEMAMPUAN BAYAR (Page 16)
+// ==============================================================================
+
+model PenilaianKonsolidasi {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String           @unique
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+  
+  // Struktur Beban Biaya Hidup Bulanan Rumah Tangga
+  biayaRumahTangga      Decimal          @db.Decimal(15, 2) // Rp 1.850.000
+  biayaPendidikan       Decimal          @db.Decimal(15, 2) // Rp 300.000
+  biayaKomunikasi       Decimal          @db.Decimal(15, 2) // Rp 500.000
+  biayaListrikAir       Decimal          @db.Decimal(15, 2) // Rp 650.000
+  biayaTransportasi     Decimal          @db.Decimal(15, 2) // Rp 1.000.000
+  totalBiayaHidup       Decimal          @db.Decimal(15, 2) // Rp 4.300.000
+  
+  // Rasio Beban Utang Berjalan (Debt Service Ratio)
+  angsuranSlikBerjalan  Decimal          @db.Decimal(15, 2) // Rp 1.022.200
+  rekomendasiAngsuranBaru Decimal        @db.Decimal(15, 2) // Rp 14.166.700
+  totalAngsuranKonsolidasi Decimal       @db.Decimal(15, 2) // Rp 15.188.900
+  rasioDsrPersentase    Decimal          @db.Decimal(5, 2)  // 24.35%
+  sisaPendapatanBersih  Decimal          @db.Decimal(15, 2) // Rp 47.177.767 (Disposable Income)
+  
+  // Rekomendasi Pemutus Kredit Bank
+  finansialMutlakStatus String           @db.VarChar(50)  // "Sangat Prima"
+  rekomendasiAkhirKomite String          @db.VarChar(100) // "Sangat Layak Disetujui"
+
+  @@map("penilaian_konsolidasi")
+}
+
+// ==============================================================================
+// 10. MODUL BARU: MATRIKS AGUNAN / COLLATERAL (Page 18)
+// ==============================================================================
+
+model Collateral {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+  
+  // Identitas Hukum Agunan Bank
+  jenisAgunan           String           @db.VarChar(100) // Contoh: SHM / BPKB / Non-Cash Collateral
+  bentukAgunan          String           @db.VarChar(100)
+  legalitasSertifikat   String           @db.VarChar(150)
+  nomorLegalitas        String           @db.VarChar(100)
+  atasNamaHukum         String           @db.VarChar(150)
+  nilaiTaksiranPasar    Decimal          @default(0) @db.Decimal(15, 2)
+  catatanSpesifikAgunan String?          @db.Text
+
+  @@map("collateral")
+}
+
+// ==============================================================================
+// 11. MODUL BARU: BATAS MAKSIMUM PEMBERIAN KREDIT / BMPK (Page 19)
+// ==============================================================================
+
+model Bmpk {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String           @unique
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+  
+  // Batas Legalitas Penyediaan Dana Bank
+  modalKpmmBank         Decimal          @db.Decimal(15, 2) // Rp 40.817.024.693
+  maksimalPihakTerkait  Decimal          @db.Decimal(15, 2) // Rp 4,08 Miliar (10%)
+  maksimalTidakTerkait  Decimal          @db.Decimal(15, 2) // Rp 8,16 Miliar (20%)
+  maksimalKelompok      Decimal          @db.Decimal(15, 2) // Rp 12,24 Miliar (30%)
+  
+  // Status Kesesuaian Kredit Nasabah
+  keteranganKesesuaian  String           @db.VarChar(255) // "Sesuai batas maksimum pemberian kredit (BMPK)"
+
+  @@map("bmpk")
+}
+
+// ==============================================================================
+// 12. MODUL BARU: LAPORAN SURVEY FISIK & LINGKUNGAN DOMISILI (Page 20-21)
+// ==============================================================================
+
+model LaporanSurvey {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String           @unique
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+  
+  // Verifikasi Lapangan Tempat Tinggal
+  kepemilikanRumah      String           @db.VarChar(50)  // Milik Sendiri
+  kondisiFisikBangunan  String           @db.VarChar(50)  // Baik dan Terawat
+  lamaDebiturMenetap    String           @db.VarChar(50)  // Lebih dari 2 tahun
+  karakterKeluargaTetangga String        @db.VarChar(100) // Dikenal baik dan ramah
+  JarakKeBank           String           @db.VarChar(50)  // > 15 Km
+  
+  // Analisis Mitigasi Risiko Kolateral & Finansial
+  mitigasiCollateralRisk String          @db.Text
+  mitigasiCharacterRisk String           @db.Text
+  mitigasiCapacityRisk  String           @db.Text
+
+  @@map("laporan_survey")
+}
+
+// ==============================================================================
+// 13. MODUL BARU: BERITA ACARA PERMOHONAN DEVIASI KETENTUAN (Page 23)
+// ==============================================================================
+
+model BeritaAcaraDeviasi {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String           @unique
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+  
+  // Parameter Penyimpangan Kebijakan (SOP)
+  dasarPenilaianDeviasi String           @db.VarChar(150) // Debt to Service Ratio (DSR)
+  hasilPemeriksaanSistem String          @db.VarChar(50)  // #N/A atau Melebihi Ketentuan
+  maksimalSopStandard   String           @db.VarChar(50)  // 50%
+  statusKeteranganSop   String           @db.VarChar(50)  // Tidak Sesuai
+  
+  // Pertimbangan Pengambilan Keputusan Eksklusif
+  pertimbanganSatu      String           @db.Text // Pemohon merupakan debitur eksisting lancar
+  pertimbanganDua      String           @db.Text // Proses pemohon kooperatif
+  pertimbanganTiga      String           @db.Text // Masa kerja > 2 tahun, posisi jabatan baik
+  
+  // Struktur Langkah Mitigasi Deviasi Bank
+  langkahMitigasiFinansial String        @db.Text
+  langkahMitigasiAgunan    String        @db.Text
+
+  @@map("berita_acara_deviasi")
+}
+
+// ==============================================================================
+// 14. TABEL BARU: KEPUTUSAN FINAL DIREKSI & STRUKTUR REKOMENDASI (Page 24-25)
+// ==============================================================================
+
+model KeputusanKomiteFinal {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String           @unique
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+
+  // Pendapat Naratif Tiap Level Pemutus
+  rekomendasiAo         String?          @db.Text // Opini Account Officer
+  rekomendasiReviewer   String?          @db.Text // Opini Reviewer / Analis
+  keputusanDireksi      String?          @db.Text // Catatan Akhir Direksi / Pemutus Utama
+
+  // Metadata Lembar Persetujuan Akhir
+  statusKeputusan       String           @db.VarChar(50)  // "DISETUJUI" / "DITOLAK"
+  tanggalKeputusan      DateTime         @db.Date
+
+  // Jejak Sirkuler Tanda Tangan Komite (One-to-Many)
+  sirkulerTandaTangan   PersetujuanKreditKomite[]
+
+  @@map("keputusan_komite_final")
+}
+
+model PersetujuanKreditKomite {
+  id                    String               @id @default(uuid())
+  keputusanKomiteId     String
+  keputusanKomite       KeputusanKomiteFinal @relation(fields: [keputusanKomiteId], references: [id], onDelete: Cascade)
+  
+  userId                String
+  user                  User                 @relation(fields: [userId], references: [id])
+  
+  tingkatJabatanKomite  String               @db.VarChar(100) // "Direktur Utama" / "Direktur Bisnis"
+  opsiKeputusan         String               @db.VarChar(50)  // "Setuju" / "Sesuai Rekomendasi"
+  tanggalSign           DateTime             @default(now())
+
+  @@map("persetujuan_kredit_komite")
+}
+
+model StrukturFasilitasDisetujui {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String           @unique
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+
+  // Rincian Plafon & Kompensasi Keuangan Berjalan
+  plafonDisetujui       Decimal          @db.Decimal(15, 2) // Rp 510.000.000
+  jenisFasilitas        String           @db.VarChar(100) // Karyawan / Multiguna
+  jangkaWaktuBulan      Int              // 36 Bulan
+  sukuBungaAnuitas      Decimal          @db.Decimal(5, 2)  // 33.33% p.a
+
+  // Struktur Biaya Administrasi Pengikatan Kredit
+  biayaProvisi          Decimal          @default(0) @db.Decimal(15, 2) // Rp 5.100.000 (1%)
+  biayaAdministrasi     Decimal          @default(0) @db.Decimal(15, 2) // Rp 500.000
+  biayaNotarisAgunan    Decimal          @default(0) @db.Decimal(15, 2) // Rp 0 / Berjalan sesuai tarif
+  biayaMeterai          Decimal          @default(0) @db.Decimal(15, 2) // Rp 50.000
+
+  // Paket Manajemen Risiko Penjaminan (Asuransi)
+  asuransiJiwaKredit    String           @db.VarChar(150) // "Asuransi Jiwa Sesuai SOP"
+  asuransiKerugianAgunan String          @db.VarChar(150) // "Asuransi Kebakaran / Kendaraan"
+  sistemPencairanDana   String           @db.VarChar(100) // "Pindah Buku / Pemindahbukuan"
+
+  @@map("struktur_fasilitas_disetujui")
+}
+
+model SyaratPencairanKredit {
+  id                    String           @id @default(uuid())
+  permohonanKreditId    String
+  permohonanKredit      PermohonanKredit @relation(fields: [permohonanKreditId], references: [id], onDelete: Cascade)
+
+  kategoriSyarat        String           @db.VarChar(50)  // "SEBELUM_PENCAIRAN" / "SELAMA_FASILITAS"
+  deskripsiSyarat       String           @db.Text         // Contoh: "Menyerahkan asli SK", "Blokir saldo 1x angsuran"
+  isTerpenuhi           Boolean          @default(false)  // Status checklist operasional legalitas bank
+  tanggalVerifikasi     DateTime?        @db.Date
+
+  @@map("syarat_pencairan_kredit")
 }
