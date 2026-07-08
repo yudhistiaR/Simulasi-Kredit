@@ -248,6 +248,9 @@ export type UserWhereInput = {
   displayUsername?: Prisma.StringNullableFilter<"User"> | string | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  permohonanPetugas?: Prisma.PermohonanKreditListRelationFilter
+  permohonanReferral?: Prisma.PermohonanKreditListRelationFilter
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -266,6 +269,9 @@ export type UserOrderByWithRelationInput = {
   displayUsername?: Prisma.SortOrderInput | Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
+  permohonanPetugas?: Prisma.PermohonanKreditOrderByRelationAggregateInput
+  permohonanReferral?: Prisma.PermohonanKreditOrderByRelationAggregateInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -288,6 +294,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   displayUsername?: Prisma.StringNullableFilter<"User"> | string | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  permohonanPetugas?: Prisma.PermohonanKreditListRelationFilter
+  permohonanReferral?: Prisma.PermohonanKreditListRelationFilter
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteListRelationFilter
 }, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -344,6 +353,9 @@ export type UserCreateInput = {
   displayUsername?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  permohonanPetugas?: Prisma.PermohonanKreditCreateNestedManyWithoutPetugasInput
+  permohonanReferral?: Prisma.PermohonanKreditCreateNestedManyWithoutReferralInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -362,6 +374,9 @@ export type UserUncheckedCreateInput = {
   displayUsername?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  permohonanPetugas?: Prisma.PermohonanKreditUncheckedCreateNestedManyWithoutPetugasInput
+  permohonanReferral?: Prisma.PermohonanKreditUncheckedCreateNestedManyWithoutReferralInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -380,6 +395,9 @@ export type UserUpdateInput = {
   displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  permohonanPetugas?: Prisma.PermohonanKreditUpdateManyWithoutPetugasNestedInput
+  permohonanReferral?: Prisma.PermohonanKreditUpdateManyWithoutReferralNestedInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -398,6 +416,9 @@ export type UserUncheckedUpdateInput = {
   displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  permohonanPetugas?: Prisma.PermohonanKreditUncheckedUpdateManyWithoutPetugasNestedInput
+  permohonanReferral?: Prisma.PermohonanKreditUncheckedUpdateManyWithoutReferralNestedInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -559,6 +580,48 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
+export type UserCreateNestedOneWithoutPermohonanPetugasInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPermohonanPetugasInput, Prisma.UserUncheckedCreateWithoutPermohonanPetugasInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPermohonanPetugasInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutPermohonanReferralInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPermohonanReferralInput, Prisma.UserUncheckedCreateWithoutPermohonanReferralInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPermohonanReferralInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPermohonanPetugasNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPermohonanPetugasInput, Prisma.UserUncheckedCreateWithoutPermohonanPetugasInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPermohonanPetugasInput
+  upsert?: Prisma.UserUpsertWithoutPermohonanPetugasInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPermohonanPetugasInput, Prisma.UserUpdateWithoutPermohonanPetugasInput>, Prisma.UserUncheckedUpdateWithoutPermohonanPetugasInput>
+}
+
+export type UserUpdateOneRequiredWithoutPermohonanReferralNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPermohonanReferralInput, Prisma.UserUncheckedCreateWithoutPermohonanReferralInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPermohonanReferralInput
+  upsert?: Prisma.UserUpsertWithoutPermohonanReferralInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPermohonanReferralInput, Prisma.UserUpdateWithoutPermohonanReferralInput>, Prisma.UserUncheckedUpdateWithoutPermohonanReferralInput>
+}
+
+export type UserCreateNestedOneWithoutPersetujuanKomiteInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPersetujuanKomiteInput, Prisma.UserUncheckedCreateWithoutPersetujuanKomiteInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPersetujuanKomiteInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPersetujuanKomiteNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPersetujuanKomiteInput, Prisma.UserUncheckedCreateWithoutPersetujuanKomiteInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPersetujuanKomiteInput
+  upsert?: Prisma.UserUpsertWithoutPersetujuanKomiteInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPersetujuanKomiteInput, Prisma.UserUpdateWithoutPersetujuanKomiteInput>, Prisma.UserUncheckedUpdateWithoutPersetujuanKomiteInput>
+}
+
 export type UserCreateWithoutSessionsInput = {
   id: string
   name: string
@@ -574,6 +637,9 @@ export type UserCreateWithoutSessionsInput = {
   username?: string | null
   displayUsername?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  permohonanPetugas?: Prisma.PermohonanKreditCreateNestedManyWithoutPetugasInput
+  permohonanReferral?: Prisma.PermohonanKreditCreateNestedManyWithoutReferralInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -591,6 +657,9 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   username?: string | null
   displayUsername?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  permohonanPetugas?: Prisma.PermohonanKreditUncheckedCreateNestedManyWithoutPetugasInput
+  permohonanReferral?: Prisma.PermohonanKreditUncheckedCreateNestedManyWithoutReferralInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -624,6 +693,9 @@ export type UserUpdateWithoutSessionsInput = {
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  permohonanPetugas?: Prisma.PermohonanKreditUpdateManyWithoutPetugasNestedInput
+  permohonanReferral?: Prisma.PermohonanKreditUpdateManyWithoutReferralNestedInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -641,6 +713,9 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  permohonanPetugas?: Prisma.PermohonanKreditUncheckedUpdateManyWithoutPetugasNestedInput
+  permohonanReferral?: Prisma.PermohonanKreditUncheckedUpdateManyWithoutReferralNestedInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -658,6 +733,9 @@ export type UserCreateWithoutAccountsInput = {
   username?: string | null
   displayUsername?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  permohonanPetugas?: Prisma.PermohonanKreditCreateNestedManyWithoutPetugasInput
+  permohonanReferral?: Prisma.PermohonanKreditCreateNestedManyWithoutReferralInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -675,6 +753,9 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   username?: string | null
   displayUsername?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  permohonanPetugas?: Prisma.PermohonanKreditUncheckedCreateNestedManyWithoutPetugasInput
+  permohonanReferral?: Prisma.PermohonanKreditUncheckedCreateNestedManyWithoutReferralInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -708,6 +789,9 @@ export type UserUpdateWithoutAccountsInput = {
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  permohonanPetugas?: Prisma.PermohonanKreditUpdateManyWithoutPetugasNestedInput
+  permohonanReferral?: Prisma.PermohonanKreditUpdateManyWithoutReferralNestedInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -725,6 +809,297 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  permohonanPetugas?: Prisma.PermohonanKreditUncheckedUpdateManyWithoutPetugasNestedInput
+  permohonanReferral?: Prisma.PermohonanKreditUncheckedUpdateManyWithoutReferralNestedInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutPermohonanPetugasInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  username?: string | null
+  displayUsername?: string | null
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  permohonanReferral?: Prisma.PermohonanKreditCreateNestedManyWithoutReferralInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPermohonanPetugasInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  username?: string | null
+  displayUsername?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  permohonanReferral?: Prisma.PermohonanKreditUncheckedCreateNestedManyWithoutReferralInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPermohonanPetugasInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPermohonanPetugasInput, Prisma.UserUncheckedCreateWithoutPermohonanPetugasInput>
+}
+
+export type UserCreateWithoutPermohonanReferralInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  username?: string | null
+  displayUsername?: string | null
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  permohonanPetugas?: Prisma.PermohonanKreditCreateNestedManyWithoutPetugasInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPermohonanReferralInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  username?: string | null
+  displayUsername?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  permohonanPetugas?: Prisma.PermohonanKreditUncheckedCreateNestedManyWithoutPetugasInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPermohonanReferralInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPermohonanReferralInput, Prisma.UserUncheckedCreateWithoutPermohonanReferralInput>
+}
+
+export type UserUpsertWithoutPermohonanPetugasInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPermohonanPetugasInput, Prisma.UserUncheckedUpdateWithoutPermohonanPetugasInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPermohonanPetugasInput, Prisma.UserUncheckedCreateWithoutPermohonanPetugasInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPermohonanPetugasInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPermohonanPetugasInput, Prisma.UserUncheckedUpdateWithoutPermohonanPetugasInput>
+}
+
+export type UserUpdateWithoutPermohonanPetugasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  permohonanReferral?: Prisma.PermohonanKreditUpdateManyWithoutReferralNestedInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPermohonanPetugasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  permohonanReferral?: Prisma.PermohonanKreditUncheckedUpdateManyWithoutReferralNestedInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutPermohonanReferralInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPermohonanReferralInput, Prisma.UserUncheckedUpdateWithoutPermohonanReferralInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPermohonanReferralInput, Prisma.UserUncheckedCreateWithoutPermohonanReferralInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPermohonanReferralInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPermohonanReferralInput, Prisma.UserUncheckedUpdateWithoutPermohonanReferralInput>
+}
+
+export type UserUpdateWithoutPermohonanReferralInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  permohonanPetugas?: Prisma.PermohonanKreditUpdateManyWithoutPetugasNestedInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPermohonanReferralInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  permohonanPetugas?: Prisma.PermohonanKreditUncheckedUpdateManyWithoutPetugasNestedInput
+  persetujuanKomite?: Prisma.PersetujuanKreditKomiteUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutPersetujuanKomiteInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  username?: string | null
+  displayUsername?: string | null
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  permohonanPetugas?: Prisma.PermohonanKreditCreateNestedManyWithoutPetugasInput
+  permohonanReferral?: Prisma.PermohonanKreditCreateNestedManyWithoutReferralInput
+}
+
+export type UserUncheckedCreateWithoutPersetujuanKomiteInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  username?: string | null
+  displayUsername?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  permohonanPetugas?: Prisma.PermohonanKreditUncheckedCreateNestedManyWithoutPetugasInput
+  permohonanReferral?: Prisma.PermohonanKreditUncheckedCreateNestedManyWithoutReferralInput
+}
+
+export type UserCreateOrConnectWithoutPersetujuanKomiteInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPersetujuanKomiteInput, Prisma.UserUncheckedCreateWithoutPersetujuanKomiteInput>
+}
+
+export type UserUpsertWithoutPersetujuanKomiteInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPersetujuanKomiteInput, Prisma.UserUncheckedUpdateWithoutPersetujuanKomiteInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPersetujuanKomiteInput, Prisma.UserUncheckedCreateWithoutPersetujuanKomiteInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPersetujuanKomiteInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPersetujuanKomiteInput, Prisma.UserUncheckedUpdateWithoutPersetujuanKomiteInput>
+}
+
+export type UserUpdateWithoutPersetujuanKomiteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  permohonanPetugas?: Prisma.PermohonanKreditUpdateManyWithoutPetugasNestedInput
+  permohonanReferral?: Prisma.PermohonanKreditUpdateManyWithoutReferralNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPersetujuanKomiteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  permohonanPetugas?: Prisma.PermohonanKreditUncheckedUpdateManyWithoutPetugasNestedInput
+  permohonanReferral?: Prisma.PermohonanKreditUncheckedUpdateManyWithoutReferralNestedInput
 }
 
 
@@ -735,11 +1110,17 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
 export type UserCountOutputType = {
   sessions: number
   accounts: number
+  permohonanPetugas: number
+  permohonanReferral: number
+  persetujuanKomite: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+  permohonanPetugas?: boolean | UserCountOutputTypeCountPermohonanPetugasArgs
+  permohonanReferral?: boolean | UserCountOutputTypeCountPermohonanReferralArgs
+  persetujuanKomite?: boolean | UserCountOutputTypeCountPersetujuanKomiteArgs
 }
 
 /**
@@ -766,6 +1147,27 @@ export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.AccountWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPermohonanPetugasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PermohonanKreditWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPermohonanReferralArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PermohonanKreditWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPersetujuanKomiteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PersetujuanKreditKomiteWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -783,6 +1185,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   displayUsername?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  permohonanPetugas?: boolean | Prisma.User$permohonanPetugasArgs<ExtArgs>
+  permohonanReferral?: boolean | Prisma.User$permohonanReferralArgs<ExtArgs>
+  persetujuanKomite?: boolean | Prisma.User$persetujuanKomiteArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -808,6 +1213,9 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  permohonanPetugas?: boolean | Prisma.User$permohonanPetugasArgs<ExtArgs>
+  permohonanReferral?: boolean | Prisma.User$permohonanReferralArgs<ExtArgs>
+  persetujuanKomite?: boolean | Prisma.User$persetujuanKomiteArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -816,6 +1224,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
+    permohonanPetugas: Prisma.$PermohonanKreditPayload<ExtArgs>[]
+    permohonanReferral: Prisma.$PermohonanKreditPayload<ExtArgs>[]
+    persetujuanKomite: Prisma.$PersetujuanKreditKomitePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1173,6 +1584,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  permohonanPetugas<T extends Prisma.User$permohonanPetugasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$permohonanPetugasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PermohonanKreditPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  permohonanReferral<T extends Prisma.User$permohonanReferralArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$permohonanReferralArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PermohonanKreditPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  persetujuanKomite<T extends Prisma.User$persetujuanKomiteArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$persetujuanKomiteArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PersetujuanKreditKomitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1608,6 +2022,78 @@ export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
+}
+
+/**
+ * User.permohonanPetugas
+ */
+export type User$permohonanPetugasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PermohonanKredit
+   */
+  select?: Prisma.PermohonanKreditSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PermohonanKredit
+   */
+  omit?: Prisma.PermohonanKreditOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PermohonanKreditInclude<ExtArgs> | null
+  where?: Prisma.PermohonanKreditWhereInput
+  orderBy?: Prisma.PermohonanKreditOrderByWithRelationInput | Prisma.PermohonanKreditOrderByWithRelationInput[]
+  cursor?: Prisma.PermohonanKreditWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PermohonanKreditScalarFieldEnum | Prisma.PermohonanKreditScalarFieldEnum[]
+}
+
+/**
+ * User.permohonanReferral
+ */
+export type User$permohonanReferralArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PermohonanKredit
+   */
+  select?: Prisma.PermohonanKreditSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PermohonanKredit
+   */
+  omit?: Prisma.PermohonanKreditOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PermohonanKreditInclude<ExtArgs> | null
+  where?: Prisma.PermohonanKreditWhereInput
+  orderBy?: Prisma.PermohonanKreditOrderByWithRelationInput | Prisma.PermohonanKreditOrderByWithRelationInput[]
+  cursor?: Prisma.PermohonanKreditWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PermohonanKreditScalarFieldEnum | Prisma.PermohonanKreditScalarFieldEnum[]
+}
+
+/**
+ * User.persetujuanKomite
+ */
+export type User$persetujuanKomiteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PersetujuanKreditKomite
+   */
+  select?: Prisma.PersetujuanKreditKomiteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PersetujuanKreditKomite
+   */
+  omit?: Prisma.PersetujuanKreditKomiteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PersetujuanKreditKomiteInclude<ExtArgs> | null
+  where?: Prisma.PersetujuanKreditKomiteWhereInput
+  orderBy?: Prisma.PersetujuanKreditKomiteOrderByWithRelationInput | Prisma.PersetujuanKreditKomiteOrderByWithRelationInput[]
+  cursor?: Prisma.PersetujuanKreditKomiteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PersetujuanKreditKomiteScalarFieldEnum | Prisma.PersetujuanKreditKomiteScalarFieldEnum[]
 }
 
 /**

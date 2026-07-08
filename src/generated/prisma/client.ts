@@ -61,3 +61,128 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Verification = Prisma.VerificationModel
+/**
+ * Model InformasiUmum
+ * 
+ */
+export type InformasiUmum = Prisma.InformasiUmumModel
+/**
+ * Model PermohonanKredit
+ * 
+ */
+export type PermohonanKredit = Prisma.PermohonanKreditModel
+/**
+ * Model CalonDebitur
+ * 
+ */
+export type CalonDebitur = Prisma.CalonDebiturModel
+/**
+ * Model PasanganDebitur
+ * 
+ */
+export type PasanganDebitur = Prisma.PasanganDebiturModel
+/**
+ * Model KarakterDebitur
+ * 
+ */
+export type KarakterDebitur = Prisma.KarakterDebiturModel
+/**
+ * Model KarakterPasangan
+ * 
+ */
+export type KarakterPasangan = Prisma.KarakterPasanganModel
+/**
+ * Model LaporanSlik
+ * 
+ */
+export type LaporanSlik = Prisma.LaporanSlikModel
+/**
+ * Model SlikPinjamanAktifBpr
+ * 
+ */
+export type SlikPinjamanAktifBpr = Prisma.SlikPinjamanAktifBprModel
+/**
+ * Model SlikPinjamanLunasBpr
+ * 
+ */
+export type SlikPinjamanLunasBpr = Prisma.SlikPinjamanLunasBprModel
+/**
+ * Model SlikFasilitasSlik
+ * 
+ */
+export type SlikFasilitasSlik = Prisma.SlikFasilitasSlikModel
+/**
+ * Model SlikFasilitasDihapus
+ * 
+ */
+export type SlikFasilitasDihapus = Prisma.SlikFasilitasDihapusModel
+/**
+ * Model KondisiEkonomi
+ * 
+ */
+export type KondisiEkonomi = Prisma.KondisiEkonomiModel
+/**
+ * Model CapitalAsset
+ * 
+ */
+export type CapitalAsset = Prisma.CapitalAssetModel
+/**
+ * Model CapacityKerja
+ * 
+ */
+export type CapacityKerja = Prisma.CapacityKerjaModel
+/**
+ * Model AnalisaKeuangan
+ * 
+ */
+export type AnalisaKeuangan = Prisma.AnalisaKeuanganModel
+/**
+ * Model VerifikasiDebitur
+ * 
+ */
+export type VerifikasiDebitur = Prisma.VerifikasiDebiturModel
+/**
+ * Model PenilaianKonsolidasi
+ * 
+ */
+export type PenilaianKonsolidasi = Prisma.PenilaianKonsolidasiModel
+/**
+ * Model Collateral
+ * 
+ */
+export type Collateral = Prisma.CollateralModel
+/**
+ * Model Bmpk
+ * 
+ */
+export type Bmpk = Prisma.BmpkModel
+/**
+ * Model LaporanSurvey
+ * 
+ */
+export type LaporanSurvey = Prisma.LaporanSurveyModel
+/**
+ * Model BeritaAcaraDeviasi
+ * 
+ */
+export type BeritaAcaraDeviasi = Prisma.BeritaAcaraDeviasiModel
+/**
+ * Model KeputusanKomiteFinal
+ * 
+ */
+export type KeputusanKomiteFinal = Prisma.KeputusanKomiteFinalModel
+/**
+ * Model PersetujuanKreditKomite
+ * 
+ */
+export type PersetujuanKreditKomite = Prisma.PersetujuanKreditKomiteModel
+/**
+ * Model StrukturFasilitasDisetujui
+ * 
+ */
+export type StrukturFasilitasDisetujui = Prisma.StrukturFasilitasDisetujuiModel
+/**
+ * Model SyaratPencairanKredit
+ * 
+ */
+export type SyaratPencairanKredit = Prisma.SyaratPencairanKreditModel

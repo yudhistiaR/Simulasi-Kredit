@@ -54,7 +54,32 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  InformasiUmum: 'InformasiUmum',
+  PermohonanKredit: 'PermohonanKredit',
+  CalonDebitur: 'CalonDebitur',
+  PasanganDebitur: 'PasanganDebitur',
+  KarakterDebitur: 'KarakterDebitur',
+  KarakterPasangan: 'KarakterPasangan',
+  LaporanSlik: 'LaporanSlik',
+  SlikPinjamanAktifBpr: 'SlikPinjamanAktifBpr',
+  SlikPinjamanLunasBpr: 'SlikPinjamanLunasBpr',
+  SlikFasilitasSlik: 'SlikFasilitasSlik',
+  SlikFasilitasDihapus: 'SlikFasilitasDihapus',
+  KondisiEkonomi: 'KondisiEkonomi',
+  CapitalAsset: 'CapitalAsset',
+  CapacityKerja: 'CapacityKerja',
+  AnalisaKeuangan: 'AnalisaKeuangan',
+  VerifikasiDebitur: 'VerifikasiDebitur',
+  PenilaianKonsolidasi: 'PenilaianKonsolidasi',
+  Collateral: 'Collateral',
+  Bmpk: 'Bmpk',
+  LaporanSurvey: 'LaporanSurvey',
+  BeritaAcaraDeviasi: 'BeritaAcaraDeviasi',
+  KeputusanKomiteFinal: 'KeputusanKomiteFinal',
+  PersetujuanKreditKomite: 'PersetujuanKreditKomite',
+  StrukturFasilitasDisetujui: 'StrukturFasilitasDisetujui',
+  SyaratPencairanKredit: 'SyaratPencairanKredit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -138,6 +163,509 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+export const InformasiUmumScalarFieldEnum = {
+  id: 'id',
+  namaBank: 'namaBank',
+  kantor: 'kantor',
+  hari: 'hari',
+  tanggalProses: 'tanggalProses',
+  jenisPemohon: 'jenisPemohon',
+  keterkaitanPemohon: 'keterkaitanPemohon',
+  statusNasabah: 'statusNasabah'
+} as const
+
+export type InformasiUmumScalarFieldEnum = (typeof InformasiUmumScalarFieldEnum)[keyof typeof InformasiUmumScalarFieldEnum]
+
+
+export const PermohonanKreditScalarFieldEnum = {
+  id: 'id',
+  informasiUmumId: 'informasiUmumId',
+  petugasId: 'petugasId',
+  referralId: 'referralId',
+  tanggalProsesDetail: 'tanggalProsesDetail',
+  statusPermohonan: 'statusPermohonan',
+  plafondPermohonan: 'plafondPermohonan',
+  bungaRatePertahun: 'bungaRatePertahun',
+  setaraBungaEffektif: 'setaraBungaEffektif',
+  jenisPembayaran: 'jenisPembayaran',
+  tujuan: 'tujuan',
+  skemaBank: 'skemaBank',
+  jenisFasilitas: 'jenisFasilitas',
+  jangkaWaktuBulan: 'jangkaWaktuBulan',
+  jangkaWaktuTahun: 'jangkaWaktuTahun',
+  angsuranPerbulan: 'angsuranPerbulan',
+  penggunaanDana: 'penggunaanDana',
+  detailPenggunaan: 'detailPenggunaan',
+  profilKepesertaan: 'profilKepesertaan',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PermohonanKreditScalarFieldEnum = (typeof PermohonanKreditScalarFieldEnum)[keyof typeof PermohonanKreditScalarFieldEnum]
+
+
+export const CalonDebiturScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  nama: 'nama',
+  statusKawin: 'statusKawin',
+  identitas: 'identitas',
+  nomorIdentitas: 'nomorIdentitas',
+  tempatLahir: 'tempatLahir',
+  tanggalLahir: 'tanggalLahir',
+  usiaMasaProses: 'usiaMasaProses',
+  agama: 'agama',
+  alamatIdentitas: 'alamatIdentitas',
+  statusTempatTinggalId: 'statusTempatTinggalId',
+  alamatTinggalSaatIni: 'alamatTinggalSaatIni',
+  statusTempatTinggalSt: 'statusTempatTinggalSt',
+  pekerjaanProfesi: 'pekerjaanProfesi',
+  nomorTelepon: 'nomorTelepon',
+  masaBerlakuIdentitas: 'masaBerlakuIdentitas',
+  namaIbuKandung: 'namaIbuKandung',
+  email: 'email',
+  tingkatPendidikan: 'tingkatPendidikan',
+  tipePendapatan: 'tipePendapatan',
+  npwp: 'npwp',
+  analisisLatarBelakang: 'analisisLatarBelakang',
+  catatanReviewer: 'catatanReviewer',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CalonDebiturScalarFieldEnum = (typeof CalonDebiturScalarFieldEnum)[keyof typeof CalonDebiturScalarFieldEnum]
+
+
+export const PasanganDebiturScalarFieldEnum = {
+  id: 'id',
+  calonDebiturId: 'calonDebiturId',
+  nama: 'nama',
+  statusKawin: 'statusKawin',
+  identitas: 'identitas',
+  nomorIdentitas: 'nomorIdentitas',
+  tempatLahir: 'tempatLahir',
+  tanggalLahir: 'tanggalLahir',
+  usiaMasaProses: 'usiaMasaProses',
+  agama: 'agama',
+  alamatIdentitas: 'alamatIdentitas',
+  alamatTinggalSaatIni: 'alamatTinggalSaatIni',
+  pekerjaanProfesi: 'pekerjaanProfesi',
+  nomorTelepon: 'nomorTelepon',
+  masaBerlakuIdentitas: 'masaBerlakuIdentitas',
+  namaIbuKandung: 'namaIbuKandung',
+  email: 'email',
+  tingkatPendidikan: 'tingkatPendidikan',
+  tipePendapatan: 'tipePendapatan',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PasanganDebiturScalarFieldEnum = (typeof PasanganDebiturScalarFieldEnum)[keyof typeof PasanganDebiturScalarFieldEnum]
+
+
+export const KarakterDebiturScalarFieldEnum = {
+  id: 'id',
+  calonDebiturId: 'calonDebiturId',
+  iktikadKewajibanTxt: 'iktikadKewajibanTxt',
+  iktikadKewajibanVal: 'iktikadKewajibanVal',
+  motivasiBekerjaTxt: 'motivasiBekerjaTxt',
+  motivasiBekerjaVal: 'motivasiBekerjaVal',
+  tingkatKepatuhanTxt: 'tingkatKepatuhanTxt',
+  tingkatKepatuhanVal: 'tingkatKepatuhanVal',
+  pendalamanPekerjaanTxt: 'pendalamanPekerjaanTxt',
+  pendalamanPekerjaanVal: 'pendalamanPekerjaanVal',
+  managementResikoTxt: 'managementResikoTxt',
+  managementResikoVal: 'managementResikoVal',
+  hubunganPihakLainTxt: 'hubunganPihakLainTxt',
+  hubunganPihakLainVal: 'hubunganPihakLainVal',
+  pendalamanAgamaTxt: 'pendalamanAgamaTxt',
+  pendalamanAgamaVal: 'pendalamanAgamaVal',
+  keharmonisanKeluargaTxt: 'keharmonisanKeluargaTxt',
+  keharmonisanKeluargaVal: 'keharmonisanKeluargaVal',
+  aktivitasSosialTxt: 'aktivitasSosialTxt',
+  aktivitasSosialVal: 'aktivitasSosialVal',
+  aktivitasKerjaTxt: 'aktivitasKerjaTxt',
+  aktivitasKerjaVal: 'aktivitasKerjaVal'
+} as const
+
+export type KarakterDebiturScalarFieldEnum = (typeof KarakterDebiturScalarFieldEnum)[keyof typeof KarakterDebiturScalarFieldEnum]
+
+
+export const KarakterPasanganScalarFieldEnum = {
+  id: 'id',
+  pasanganDebiturId: 'pasanganDebiturId',
+  iktikadKewajibanTxt: 'iktikadKewajibanTxt',
+  iktikadKewajibanVal: 'iktikadKewajibanVal',
+  motivasiBekerjaTxt: 'motivasiBekerjaTxt',
+  motivasiBekerjaVal: 'motivasiBekerjaVal',
+  tingkatKepatuhanTxt: 'tingkatKepatuhanTxt',
+  tingkatKepatuhanVal: 'tingkatKepatuhanVal',
+  pendalamanPekerjaanTxt: 'pendalamanPekerjaanTxt',
+  pendalamanPekerjaanVal: 'pendalamanPekerjaanVal',
+  managementResikoTxt: 'managementResikoTxt',
+  managementResikoVal: 'managementResikoVal',
+  hubunganPihakLainTxt: 'hubunganPihakLainTxt',
+  hubunganPihakLainVal: 'hubunganPihakLainVal',
+  pendalamanAgamaTxt: 'pendalamanAgamaTxt',
+  pendalamanAgamaVal: 'pendalamanAgamaVal',
+  keharmonisanKeluargaTxt: 'keharmonisanKeluargaTxt',
+  keharmonisanKeluargaVal: 'keharmonisanKeluargaVal',
+  aktivitasSosialTxt: 'aktivitasSosialTxt',
+  aktivitasSosialVal: 'aktivitasSosialVal',
+  aktivitasKerjaTxt: 'aktivitasKerjaTxt',
+  aktivitasKerjaVal: 'aktivitasKerjaVal'
+} as const
+
+export type KarakterPasanganScalarFieldEnum = (typeof KarakterPasanganScalarFieldEnum)[keyof typeof KarakterPasanganScalarFieldEnum]
+
+
+export const LaporanSlikScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  hari: 'hari',
+  ditarikPadaTanggal: 'ditarikPadaTanggal',
+  analisisKreditIntro: 'analisisKreditIntro',
+  narasiPinjamanBpr: 'narasiPinjamanBpr',
+  totalPlafonBpr: 'totalPlafonBpr',
+  totalBakiDebetBpr: 'totalBakiDebetBpr',
+  totalAngsuranBpr: 'totalAngsuranBpr',
+  catatanPinjamanBpr: 'catatanPinjamanBpr',
+  narasiFasilitasSlik: 'narasiFasilitasSlik',
+  totalPlafonSlik: 'totalPlafonSlik',
+  totalBakiDebetSlik: 'totalBakiDebetSlik',
+  totalAngsuranSlik: 'totalAngsuranSlik',
+  catatanFasilitasSlik: 'catatanFasilitasSlik',
+  kesimpulanKolektibilitas: 'kesimpulanKolektibilitas',
+  rekomendasiReviewerSlik: 'rekomendasiReviewerSlik',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LaporanSlikScalarFieldEnum = (typeof LaporanSlikScalarFieldEnum)[keyof typeof LaporanSlikScalarFieldEnum]
+
+
+export const SlikPinjamanAktifBprScalarFieldEnum = {
+  id: 'id',
+  laporanSlikId: 'laporanSlikId',
+  nama: 'nama',
+  tglRealisasi: 'tglRealisasi',
+  tglJatuhTempo: 'tglJatuhTempo',
+  kolektibilitas: 'kolektibilitas',
+  keterangan: 'keterangan',
+  plafon: 'plafon',
+  bakiDebet: 'bakiDebet',
+  tenor: 'tenor',
+  rate: 'rate',
+  angsuranBulan: 'angsuranBulan',
+  jenisPembayaran: 'jenisPembayaran',
+  kondisi: 'kondisi'
+} as const
+
+export type SlikPinjamanAktifBprScalarFieldEnum = (typeof SlikPinjamanAktifBprScalarFieldEnum)[keyof typeof SlikPinjamanAktifBprScalarFieldEnum]
+
+
+export const SlikPinjamanLunasBprScalarFieldEnum = {
+  id: 'id',
+  laporanSlikId: 'laporanSlikId',
+  nama: 'nama',
+  tglRealisasi: 'tglRealisasi',
+  tglJatuhTempo: 'tglJatuhTempo',
+  kolektibilitas: 'kolektibilitas',
+  keterangan: 'keterangan',
+  plafon: 'plafon',
+  bakiDebet: 'bakiDebet',
+  tenor: 'tenor',
+  rate: 'rate',
+  angsuranBulan: 'angsuranBulan',
+  jenisPembayaran: 'jenisPembayaran',
+  kondisi: 'kondisi'
+} as const
+
+export type SlikPinjamanLunasBprScalarFieldEnum = (typeof SlikPinjamanLunasBprScalarFieldEnum)[keyof typeof SlikPinjamanLunasBprScalarFieldEnum]
+
+
+export const SlikFasilitasSlikScalarFieldEnum = {
+  id: 'id',
+  laporanSlikId: 'laporanSlikId',
+  namaNasabah: 'namaNasabah',
+  namaBank: 'namaBank',
+  tglRealisasi: 'tglRealisasi',
+  tglJatuhTempo: 'tglJatuhTempo',
+  jenisKredit: 'jenisKredit',
+  plafon: 'plafon',
+  bakiDebet: 'bakiDebet',
+  tenor: 'tenor',
+  rate: 'rate',
+  angsuran: 'angsuran',
+  kolektibilitas: 'kolektibilitas',
+  jenisPembayaran: 'jenisPembayaran'
+} as const
+
+export type SlikFasilitasSlikScalarFieldEnum = (typeof SlikFasilitasSlikScalarFieldEnum)[keyof typeof SlikFasilitasSlikScalarFieldEnum]
+
+
+export const SlikFasilitasDihapusScalarFieldEnum = {
+  id: 'id',
+  laporanSlikId: 'laporanSlikId',
+  namaNasabah: 'namaNasabah',
+  namaBank: 'namaBank',
+  tglRealisasi: 'tglRealisasi',
+  tglJatuhTempo: 'tglJatuhTempo',
+  jenisKredit: 'jenisKredit',
+  plafon: 'plafon',
+  bakiDebet: 'bakiDebet',
+  tenor: 'tenor',
+  rate: 'rate',
+  kondisi: 'kondisi',
+  kolektibilitas: 'kolektibilitas',
+  jenisPembayaran: 'jenisPembayaran'
+} as const
+
+export type SlikFasilitasDihapusScalarFieldEnum = (typeof SlikFasilitasDihapusScalarFieldEnum)[keyof typeof SlikFasilitasDihapusScalarFieldEnum]
+
+
+export const KondisiEkonomiScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  sumberStabilitasPenghasilan: 'sumberStabilitasPenghasilan',
+  debtToIncomeRatio: 'debtToIncomeRatio',
+  kondisiEkonomiMakro: 'kondisiEkonomiMakro',
+  riwayatSkorKredit: 'riwayatSkorKredit',
+  dampakSosialMasyarakat: 'dampakSosialMasyarakat',
+  dampakEkonomiMikro: 'dampakEkonomiMikro',
+  dampakEkonomiMakro: 'dampakEkonomiMakro',
+  dampakLingkungan: 'dampakLingkungan',
+  kebijakanPemerintah: 'kebijakanPemerintah',
+  ekonomiGlobal: 'ekonomiGlobal'
+} as const
+
+export type KondisiEkonomiScalarFieldEnum = (typeof KondisiEkonomiScalarFieldEnum)[keyof typeof KondisiEkonomiScalarFieldEnum]
+
+
+export const CapitalAssetScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  nilaiTanahBangunan: 'nilaiTanahBangunan',
+  penyusutanTanahBangunan: 'penyusutanTanahBangunan',
+  nilaiKendaraan: 'nilaiKendaraan',
+  penyusutanKendaraan: 'penyusutanKendaraan',
+  nilaiMebelair: 'nilaiMebelair',
+  penyusutanMebelair: 'penyusutanMebelair',
+  totalNilaiPasarAset: 'totalNilaiPasarAset',
+  totalPenyusutanPertahun: 'totalPenyusutanPertahun',
+  narasiSumberStabilitas: 'narasiSumberStabilitas',
+  narasiRepaymentCapacity: 'narasiRepaymentCapacity',
+  narasiKarakterRiwayat: 'narasiKarakterRiwayat',
+  narasiFaktorEksternal: 'narasiFaktorEksternal',
+  integrasiProfilRisiko: 'integrasiProfilRisiko',
+  rekomendasiKelayakan: 'rekomendasiKelayakan'
+} as const
+
+export type CapitalAssetScalarFieldEnum = (typeof CapitalAssetScalarFieldEnum)[keyof typeof CapitalAssetScalarFieldEnum]
+
+
+export const CapacityKerjaScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  jabatanDebitur: 'jabatanDebitur',
+  levelGrade: 'levelGrade',
+  statusKepegawaian: 'statusKepegawaian',
+  tanggalAwalBekerja: 'tanggalAwalBekerja',
+  masaKerjaNarasi: 'masaKerjaNarasi',
+  nomorKeteranganKerja: 'nomorKeteranganKerja',
+  tanggalSuratKeterangan: 'tanggalSuratKeterangan',
+  nomorCorporateGuarantee: 'nomorCorporateGuarantee',
+  namaPerusahaan: 'namaPerusahaan',
+  jenisBadanUsaha: 'jenisBadanUsaha',
+  sektortUsaha: 'sektortUsaha',
+  jumlahKaryawan: 'jumlahKaryawan',
+  skalaLingkupUsaha: 'skalaLingkupUsaha',
+  analisisKarierRekam: 'analisisKarierRekam',
+  analisisKeberlanjutan: 'analisisKeberlanjutan',
+  analisisRisikoInternal: 'analisisRisikoInternal',
+  prospekKenaikanGaji: 'prospekKenaikanGaji'
+} as const
+
+export type CapacityKerjaScalarFieldEnum = (typeof CapacityKerjaScalarFieldEnum)[keyof typeof CapacityKerjaScalarFieldEnum]
+
+
+export const AnalisaKeuanganScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  tipePendapatanCore: 'tipePendapatanCore',
+  gajiPokokStabil: 'gajiPokokStabil',
+  tunjanganJabatanMaret: 'tunjanganJabatanMaret',
+  tunjanganJabatanApril: 'tunjanganJabatanApril',
+  tunjanganJabatanMei: 'tunjanganJabatanMei',
+  insentifTetapFixed: 'insentifTetapFixed',
+  positionIncentives: 'positionIncentives',
+  potonganBpjsTk: 'potonganBpjsTk',
+  potonganBpjsKes: 'potonganBpjsKes',
+  rataRataTakeHomePay: 'rataRataTakeHomePay',
+  kualitasPendapatanTxt: 'kualitasPendapatanTxt',
+  ruangLikuiditasMembayar: 'ruangLikuiditasMembayar'
+} as const
+
+export type AnalisaKeuanganScalarFieldEnum = (typeof AnalisaKeuanganScalarFieldEnum)[keyof typeof AnalisaKeuanganScalarFieldEnum]
+
+
+export const VerifikasiDebiturScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  namaVerifikator: 'namaVerifikator',
+  jabatanVerifikator: 'jabatanVerifikator',
+  nomorTeleponVerifikator: 'nomorTeleponVerifikator',
+  metodeKonfirmasi: 'metodeKonfirmasi',
+  durasiHubunganKerja: 'durasiHubunganKerja',
+  kinerjaProfesional: 'kinerjaProfesional',
+  karakterDisiplin: 'karakterDisiplin',
+  tingkatKepatuhanHukum: 'tingkatKepatuhanHukum',
+  statusMenguntungkanCo: 'statusMenguntungkanCo',
+  kesimpulanRisikoKarier: 'kesimpulanRisikoKarier',
+  korelasiKarakterKredit: 'korelasiKarakterKredit'
+} as const
+
+export type VerifikasiDebiturScalarFieldEnum = (typeof VerifikasiDebiturScalarFieldEnum)[keyof typeof VerifikasiDebiturScalarFieldEnum]
+
+
+export const PenilaianKonsolidasiScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  biayaRumahTangga: 'biayaRumahTangga',
+  biayaPendidikan: 'biayaPendidikan',
+  biayaKomunikasi: 'biayaKomunikasi',
+  biayaListrikAir: 'biayaListrikAir',
+  biayaTransportasi: 'biayaTransportasi',
+  totalBiayaHidup: 'totalBiayaHidup',
+  angsuranSlikBerjalan: 'angsuranSlikBerjalan',
+  rekomendasiAngsuranBaru: 'rekomendasiAngsuranBaru',
+  totalAngsuranKonsolidasi: 'totalAngsuranKonsolidasi',
+  rasioDsrPersentase: 'rasioDsrPersentase',
+  sisaPendapatanBersih: 'sisaPendapatanBersih',
+  finansialMutlakStatus: 'finansialMutlakStatus',
+  rekomendasiAkhirKomite: 'rekomendasiAkhirKomite'
+} as const
+
+export type PenilaianKonsolidasiScalarFieldEnum = (typeof PenilaianKonsolidasiScalarFieldEnum)[keyof typeof PenilaianKonsolidasiScalarFieldEnum]
+
+
+export const CollateralScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  jenisAgunan: 'jenisAgunan',
+  bentukAgunan: 'bentukAgunan',
+  legalitasSertifikat: 'legalitasSertifikat',
+  nomorLegalitas: 'nomorLegalitas',
+  atasNamaHukum: 'atasNamaHukum',
+  nilaiTaksiranPasar: 'nilaiTaksiranPasar',
+  catatanSpesifikAgunan: 'catatanSpesifikAgunan'
+} as const
+
+export type CollateralScalarFieldEnum = (typeof CollateralScalarFieldEnum)[keyof typeof CollateralScalarFieldEnum]
+
+
+export const BmpkScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  modalKpmmBank: 'modalKpmmBank',
+  maksimalPihakTerkait: 'maksimalPihakTerkait',
+  maksimalTidakTerkait: 'maksimalTidakTerkait',
+  maksimalKelompok: 'maksimalKelompok',
+  keteranganKesesuaian: 'keteranganKesesuaian'
+} as const
+
+export type BmpkScalarFieldEnum = (typeof BmpkScalarFieldEnum)[keyof typeof BmpkScalarFieldEnum]
+
+
+export const LaporanSurveyScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  kepemilikanRumah: 'kepemilikanRumah',
+  kondisiFisikBangunan: 'kondisiFisikBangunan',
+  lamaDebiturMenetap: 'lamaDebiturMenetap',
+  karakterKeluargaTetangga: 'karakterKeluargaTetangga',
+  JarakKeBank: 'JarakKeBank',
+  mitigasiCollateralRisk: 'mitigasiCollateralRisk',
+  mitigasiCharacterRisk: 'mitigasiCharacterRisk',
+  mitigasiCapacityRisk: 'mitigasiCapacityRisk'
+} as const
+
+export type LaporanSurveyScalarFieldEnum = (typeof LaporanSurveyScalarFieldEnum)[keyof typeof LaporanSurveyScalarFieldEnum]
+
+
+export const BeritaAcaraDeviasiScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  dasarPenilaianDeviasi: 'dasarPenilaianDeviasi',
+  hasilPemeriksaanSistem: 'hasilPemeriksaanSistem',
+  maksimalSopStandard: 'maksimalSopStandard',
+  statusKeteranganSop: 'statusKeteranganSop',
+  pertimbanganSatu: 'pertimbanganSatu',
+  pertimbanganDua: 'pertimbanganDua',
+  pertimbanganTiga: 'pertimbanganTiga',
+  langkahMitigasiFinansial: 'langkahMitigasiFinansial',
+  langkahMitigasiAgunan: 'langkahMitigasiAgunan'
+} as const
+
+export type BeritaAcaraDeviasiScalarFieldEnum = (typeof BeritaAcaraDeviasiScalarFieldEnum)[keyof typeof BeritaAcaraDeviasiScalarFieldEnum]
+
+
+export const KeputusanKomiteFinalScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  rekomendasiAo: 'rekomendasiAo',
+  rekomendasiReviewer: 'rekomendasiReviewer',
+  keputusanDireksi: 'keputusanDireksi',
+  statusKeputusan: 'statusKeputusan',
+  tanggalKeputusan: 'tanggalKeputusan'
+} as const
+
+export type KeputusanKomiteFinalScalarFieldEnum = (typeof KeputusanKomiteFinalScalarFieldEnum)[keyof typeof KeputusanKomiteFinalScalarFieldEnum]
+
+
+export const PersetujuanKreditKomiteScalarFieldEnum = {
+  id: 'id',
+  keputusanKomiteId: 'keputusanKomiteId',
+  userId: 'userId',
+  tingkatJabatanKomite: 'tingkatJabatanKomite',
+  opsiKeputusan: 'opsiKeputusan',
+  tanggalSign: 'tanggalSign'
+} as const
+
+export type PersetujuanKreditKomiteScalarFieldEnum = (typeof PersetujuanKreditKomiteScalarFieldEnum)[keyof typeof PersetujuanKreditKomiteScalarFieldEnum]
+
+
+export const StrukturFasilitasDisetujuiScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  plafonDisetujui: 'plafonDisetujui',
+  jenisFasilitas: 'jenisFasilitas',
+  jangkaWaktuBulan: 'jangkaWaktuBulan',
+  sukuBungaAnuitas: 'sukuBungaAnuitas',
+  biayaProvisi: 'biayaProvisi',
+  biayaAdministrasi: 'biayaAdministrasi',
+  biayaNotarisAgunan: 'biayaNotarisAgunan',
+  biayaMeterai: 'biayaMeterai',
+  asuransiJiwaKredit: 'asuransiJiwaKredit',
+  asuransiKerugianAgunan: 'asuransiKerugianAgunan',
+  sistemPencairanDana: 'sistemPencairanDana'
+} as const
+
+export type StrukturFasilitasDisetujuiScalarFieldEnum = (typeof StrukturFasilitasDisetujuiScalarFieldEnum)[keyof typeof StrukturFasilitasDisetujuiScalarFieldEnum]
+
+
+export const SyaratPencairanKreditScalarFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  kategoriSyarat: 'kategoriSyarat',
+  deskripsiSyarat: 'deskripsiSyarat',
+  isTerpenuhi: 'isTerpenuhi',
+  tanggalVerifikasi: 'tanggalVerifikasi'
+} as const
+
+export type SyaratPencairanKreditScalarFieldEnum = (typeof SyaratPencairanKreditScalarFieldEnum)[keyof typeof SyaratPencairanKreditScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -202,4 +730,388 @@ export const VerificationOrderByRelevanceFieldEnum = {
 } as const
 
 export type VerificationOrderByRelevanceFieldEnum = (typeof VerificationOrderByRelevanceFieldEnum)[keyof typeof VerificationOrderByRelevanceFieldEnum]
+
+
+export const InformasiUmumOrderByRelevanceFieldEnum = {
+  id: 'id',
+  namaBank: 'namaBank',
+  kantor: 'kantor',
+  hari: 'hari',
+  jenisPemohon: 'jenisPemohon',
+  keterkaitanPemohon: 'keterkaitanPemohon',
+  statusNasabah: 'statusNasabah'
+} as const
+
+export type InformasiUmumOrderByRelevanceFieldEnum = (typeof InformasiUmumOrderByRelevanceFieldEnum)[keyof typeof InformasiUmumOrderByRelevanceFieldEnum]
+
+
+export const PermohonanKreditOrderByRelevanceFieldEnum = {
+  id: 'id',
+  informasiUmumId: 'informasiUmumId',
+  petugasId: 'petugasId',
+  referralId: 'referralId',
+  statusPermohonan: 'statusPermohonan',
+  jenisPembayaran: 'jenisPembayaran',
+  tujuan: 'tujuan',
+  skemaBank: 'skemaBank',
+  jenisFasilitas: 'jenisFasilitas',
+  penggunaanDana: 'penggunaanDana',
+  detailPenggunaan: 'detailPenggunaan',
+  profilKepesertaan: 'profilKepesertaan'
+} as const
+
+export type PermohonanKreditOrderByRelevanceFieldEnum = (typeof PermohonanKreditOrderByRelevanceFieldEnum)[keyof typeof PermohonanKreditOrderByRelevanceFieldEnum]
+
+
+export const CalonDebiturOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  nama: 'nama',
+  statusKawin: 'statusKawin',
+  identitas: 'identitas',
+  nomorIdentitas: 'nomorIdentitas',
+  tempatLahir: 'tempatLahir',
+  usiaMasaProses: 'usiaMasaProses',
+  agama: 'agama',
+  alamatIdentitas: 'alamatIdentitas',
+  statusTempatTinggalId: 'statusTempatTinggalId',
+  alamatTinggalSaatIni: 'alamatTinggalSaatIni',
+  statusTempatTinggalSt: 'statusTempatTinggalSt',
+  pekerjaanProfesi: 'pekerjaanProfesi',
+  nomorTelepon: 'nomorTelepon',
+  masaBerlakuIdentitas: 'masaBerlakuIdentitas',
+  namaIbuKandung: 'namaIbuKandung',
+  email: 'email',
+  tingkatPendidikan: 'tingkatPendidikan',
+  tipePendapatan: 'tipePendapatan',
+  npwp: 'npwp',
+  analisisLatarBelakang: 'analisisLatarBelakang',
+  catatanReviewer: 'catatanReviewer'
+} as const
+
+export type CalonDebiturOrderByRelevanceFieldEnum = (typeof CalonDebiturOrderByRelevanceFieldEnum)[keyof typeof CalonDebiturOrderByRelevanceFieldEnum]
+
+
+export const PasanganDebiturOrderByRelevanceFieldEnum = {
+  id: 'id',
+  calonDebiturId: 'calonDebiturId',
+  nama: 'nama',
+  statusKawin: 'statusKawin',
+  identitas: 'identitas',
+  nomorIdentitas: 'nomorIdentitas',
+  tempatLahir: 'tempatLahir',
+  usiaMasaProses: 'usiaMasaProses',
+  agama: 'agama',
+  alamatIdentitas: 'alamatIdentitas',
+  alamatTinggalSaatIni: 'alamatTinggalSaatIni',
+  pekerjaanProfesi: 'pekerjaanProfesi',
+  nomorTelepon: 'nomorTelepon',
+  masaBerlakuIdentitas: 'masaBerlakuIdentitas',
+  namaIbuKandung: 'namaIbuKandung',
+  email: 'email',
+  tingkatPendidikan: 'tingkatPendidikan',
+  tipePendapatan: 'tipePendapatan'
+} as const
+
+export type PasanganDebiturOrderByRelevanceFieldEnum = (typeof PasanganDebiturOrderByRelevanceFieldEnum)[keyof typeof PasanganDebiturOrderByRelevanceFieldEnum]
+
+
+export const KarakterDebiturOrderByRelevanceFieldEnum = {
+  id: 'id',
+  calonDebiturId: 'calonDebiturId',
+  iktikadKewajibanTxt: 'iktikadKewajibanTxt',
+  motivasiBekerjaTxt: 'motivasiBekerjaTxt',
+  tingkatKepatuhanTxt: 'tingkatKepatuhanTxt',
+  pendalamanPekerjaanTxt: 'pendalamanPekerjaanTxt',
+  managementResikoTxt: 'managementResikoTxt',
+  hubunganPihakLainTxt: 'hubunganPihakLainTxt',
+  pendalamanAgamaTxt: 'pendalamanAgamaTxt',
+  keharmonisanKeluargaTxt: 'keharmonisanKeluargaTxt',
+  aktivitasSosialTxt: 'aktivitasSosialTxt',
+  aktivitasKerjaTxt: 'aktivitasKerjaTxt'
+} as const
+
+export type KarakterDebiturOrderByRelevanceFieldEnum = (typeof KarakterDebiturOrderByRelevanceFieldEnum)[keyof typeof KarakterDebiturOrderByRelevanceFieldEnum]
+
+
+export const KarakterPasanganOrderByRelevanceFieldEnum = {
+  id: 'id',
+  pasanganDebiturId: 'pasanganDebiturId',
+  iktikadKewajibanTxt: 'iktikadKewajibanTxt',
+  motivasiBekerjaTxt: 'motivasiBekerjaTxt',
+  tingkatKepatuhanTxt: 'tingkatKepatuhanTxt',
+  pendalamanPekerjaanTxt: 'pendalamanPekerjaanTxt',
+  managementResikoTxt: 'managementResikoTxt',
+  hubunganPihakLainTxt: 'hubunganPihakLainTxt',
+  pendalamanAgamaTxt: 'pendalamanAgamaTxt',
+  keharmonisanKeluargaTxt: 'keharmonisanKeluargaTxt',
+  aktivitasSosialTxt: 'aktivitasSosialTxt',
+  aktivitasKerjaTxt: 'aktivitasKerjaTxt'
+} as const
+
+export type KarakterPasanganOrderByRelevanceFieldEnum = (typeof KarakterPasanganOrderByRelevanceFieldEnum)[keyof typeof KarakterPasanganOrderByRelevanceFieldEnum]
+
+
+export const LaporanSlikOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  hari: 'hari',
+  analisisKreditIntro: 'analisisKreditIntro',
+  narasiPinjamanBpr: 'narasiPinjamanBpr',
+  catatanPinjamanBpr: 'catatanPinjamanBpr',
+  narasiFasilitasSlik: 'narasiFasilitasSlik',
+  catatanFasilitasSlik: 'catatanFasilitasSlik',
+  kesimpulanKolektibilitas: 'kesimpulanKolektibilitas',
+  rekomendasiReviewerSlik: 'rekomendasiReviewerSlik'
+} as const
+
+export type LaporanSlikOrderByRelevanceFieldEnum = (typeof LaporanSlikOrderByRelevanceFieldEnum)[keyof typeof LaporanSlikOrderByRelevanceFieldEnum]
+
+
+export const SlikPinjamanAktifBprOrderByRelevanceFieldEnum = {
+  id: 'id',
+  laporanSlikId: 'laporanSlikId',
+  nama: 'nama',
+  kolektibilitas: 'kolektibilitas',
+  keterangan: 'keterangan',
+  jenisPembayaran: 'jenisPembayaran',
+  kondisi: 'kondisi'
+} as const
+
+export type SlikPinjamanAktifBprOrderByRelevanceFieldEnum = (typeof SlikPinjamanAktifBprOrderByRelevanceFieldEnum)[keyof typeof SlikPinjamanAktifBprOrderByRelevanceFieldEnum]
+
+
+export const SlikPinjamanLunasBprOrderByRelevanceFieldEnum = {
+  id: 'id',
+  laporanSlikId: 'laporanSlikId',
+  nama: 'nama',
+  kolektibilitas: 'kolektibilitas',
+  keterangan: 'keterangan',
+  jenisPembayaran: 'jenisPembayaran',
+  kondisi: 'kondisi'
+} as const
+
+export type SlikPinjamanLunasBprOrderByRelevanceFieldEnum = (typeof SlikPinjamanLunasBprOrderByRelevanceFieldEnum)[keyof typeof SlikPinjamanLunasBprOrderByRelevanceFieldEnum]
+
+
+export const SlikFasilitasSlikOrderByRelevanceFieldEnum = {
+  id: 'id',
+  laporanSlikId: 'laporanSlikId',
+  namaNasabah: 'namaNasabah',
+  namaBank: 'namaBank',
+  jenisKredit: 'jenisKredit',
+  kolektibilitas: 'kolektibilitas',
+  jenisPembayaran: 'jenisPembayaran'
+} as const
+
+export type SlikFasilitasSlikOrderByRelevanceFieldEnum = (typeof SlikFasilitasSlikOrderByRelevanceFieldEnum)[keyof typeof SlikFasilitasSlikOrderByRelevanceFieldEnum]
+
+
+export const SlikFasilitasDihapusOrderByRelevanceFieldEnum = {
+  id: 'id',
+  laporanSlikId: 'laporanSlikId',
+  namaNasabah: 'namaNasabah',
+  namaBank: 'namaBank',
+  jenisKredit: 'jenisKredit',
+  kondisi: 'kondisi',
+  kolektibilitas: 'kolektibilitas',
+  jenisPembayaran: 'jenisPembayaran'
+} as const
+
+export type SlikFasilitasDihapusOrderByRelevanceFieldEnum = (typeof SlikFasilitasDihapusOrderByRelevanceFieldEnum)[keyof typeof SlikFasilitasDihapusOrderByRelevanceFieldEnum]
+
+
+export const KondisiEkonomiOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  sumberStabilitasPenghasilan: 'sumberStabilitasPenghasilan',
+  debtToIncomeRatio: 'debtToIncomeRatio',
+  kondisiEkonomiMakro: 'kondisiEkonomiMakro',
+  riwayatSkorKredit: 'riwayatSkorKredit',
+  dampakSosialMasyarakat: 'dampakSosialMasyarakat',
+  dampakEkonomiMikro: 'dampakEkonomiMikro',
+  dampakEkonomiMakro: 'dampakEkonomiMakro',
+  dampakLingkungan: 'dampakLingkungan',
+  kebijakanPemerintah: 'kebijakanPemerintah',
+  ekonomiGlobal: 'ekonomiGlobal'
+} as const
+
+export type KondisiEkonomiOrderByRelevanceFieldEnum = (typeof KondisiEkonomiOrderByRelevanceFieldEnum)[keyof typeof KondisiEkonomiOrderByRelevanceFieldEnum]
+
+
+export const CapitalAssetOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  narasiSumberStabilitas: 'narasiSumberStabilitas',
+  narasiRepaymentCapacity: 'narasiRepaymentCapacity',
+  narasiKarakterRiwayat: 'narasiKarakterRiwayat',
+  narasiFaktorEksternal: 'narasiFaktorEksternal',
+  integrasiProfilRisiko: 'integrasiProfilRisiko',
+  rekomendasiKelayakan: 'rekomendasiKelayakan'
+} as const
+
+export type CapitalAssetOrderByRelevanceFieldEnum = (typeof CapitalAssetOrderByRelevanceFieldEnum)[keyof typeof CapitalAssetOrderByRelevanceFieldEnum]
+
+
+export const CapacityKerjaOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  jabatanDebitur: 'jabatanDebitur',
+  levelGrade: 'levelGrade',
+  statusKepegawaian: 'statusKepegawaian',
+  masaKerjaNarasi: 'masaKerjaNarasi',
+  nomorKeteranganKerja: 'nomorKeteranganKerja',
+  nomorCorporateGuarantee: 'nomorCorporateGuarantee',
+  namaPerusahaan: 'namaPerusahaan',
+  jenisBadanUsaha: 'jenisBadanUsaha',
+  sektortUsaha: 'sektortUsaha',
+  skalaLingkupUsaha: 'skalaLingkupUsaha',
+  analisisKarierRekam: 'analisisKarierRekam',
+  analisisKeberlanjutan: 'analisisKeberlanjutan',
+  analisisRisikoInternal: 'analisisRisikoInternal',
+  prospekKenaikanGaji: 'prospekKenaikanGaji'
+} as const
+
+export type CapacityKerjaOrderByRelevanceFieldEnum = (typeof CapacityKerjaOrderByRelevanceFieldEnum)[keyof typeof CapacityKerjaOrderByRelevanceFieldEnum]
+
+
+export const AnalisaKeuanganOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  tipePendapatanCore: 'tipePendapatanCore',
+  kualitasPendapatanTxt: 'kualitasPendapatanTxt',
+  ruangLikuiditasMembayar: 'ruangLikuiditasMembayar'
+} as const
+
+export type AnalisaKeuanganOrderByRelevanceFieldEnum = (typeof AnalisaKeuanganOrderByRelevanceFieldEnum)[keyof typeof AnalisaKeuanganOrderByRelevanceFieldEnum]
+
+
+export const VerifikasiDebiturOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  namaVerifikator: 'namaVerifikator',
+  jabatanVerifikator: 'jabatanVerifikator',
+  nomorTeleponVerifikator: 'nomorTeleponVerifikator',
+  metodeKonfirmasi: 'metodeKonfirmasi',
+  durasiHubunganKerja: 'durasiHubunganKerja',
+  kinerjaProfesional: 'kinerjaProfesional',
+  karakterDisiplin: 'karakterDisiplin',
+  tingkatKepatuhanHukum: 'tingkatKepatuhanHukum',
+  statusMenguntungkanCo: 'statusMenguntungkanCo',
+  kesimpulanRisikoKarier: 'kesimpulanRisikoKarier',
+  korelasiKarakterKredit: 'korelasiKarakterKredit'
+} as const
+
+export type VerifikasiDebiturOrderByRelevanceFieldEnum = (typeof VerifikasiDebiturOrderByRelevanceFieldEnum)[keyof typeof VerifikasiDebiturOrderByRelevanceFieldEnum]
+
+
+export const PenilaianKonsolidasiOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  finansialMutlakStatus: 'finansialMutlakStatus',
+  rekomendasiAkhirKomite: 'rekomendasiAkhirKomite'
+} as const
+
+export type PenilaianKonsolidasiOrderByRelevanceFieldEnum = (typeof PenilaianKonsolidasiOrderByRelevanceFieldEnum)[keyof typeof PenilaianKonsolidasiOrderByRelevanceFieldEnum]
+
+
+export const CollateralOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  jenisAgunan: 'jenisAgunan',
+  bentukAgunan: 'bentukAgunan',
+  legalitasSertifikat: 'legalitasSertifikat',
+  nomorLegalitas: 'nomorLegalitas',
+  atasNamaHukum: 'atasNamaHukum',
+  catatanSpesifikAgunan: 'catatanSpesifikAgunan'
+} as const
+
+export type CollateralOrderByRelevanceFieldEnum = (typeof CollateralOrderByRelevanceFieldEnum)[keyof typeof CollateralOrderByRelevanceFieldEnum]
+
+
+export const BmpkOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  keteranganKesesuaian: 'keteranganKesesuaian'
+} as const
+
+export type BmpkOrderByRelevanceFieldEnum = (typeof BmpkOrderByRelevanceFieldEnum)[keyof typeof BmpkOrderByRelevanceFieldEnum]
+
+
+export const LaporanSurveyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  kepemilikanRumah: 'kepemilikanRumah',
+  kondisiFisikBangunan: 'kondisiFisikBangunan',
+  lamaDebiturMenetap: 'lamaDebiturMenetap',
+  karakterKeluargaTetangga: 'karakterKeluargaTetangga',
+  JarakKeBank: 'JarakKeBank',
+  mitigasiCollateralRisk: 'mitigasiCollateralRisk',
+  mitigasiCharacterRisk: 'mitigasiCharacterRisk',
+  mitigasiCapacityRisk: 'mitigasiCapacityRisk'
+} as const
+
+export type LaporanSurveyOrderByRelevanceFieldEnum = (typeof LaporanSurveyOrderByRelevanceFieldEnum)[keyof typeof LaporanSurveyOrderByRelevanceFieldEnum]
+
+
+export const BeritaAcaraDeviasiOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  dasarPenilaianDeviasi: 'dasarPenilaianDeviasi',
+  hasilPemeriksaanSistem: 'hasilPemeriksaanSistem',
+  maksimalSopStandard: 'maksimalSopStandard',
+  statusKeteranganSop: 'statusKeteranganSop',
+  pertimbanganSatu: 'pertimbanganSatu',
+  pertimbanganDua: 'pertimbanganDua',
+  pertimbanganTiga: 'pertimbanganTiga',
+  langkahMitigasiFinansial: 'langkahMitigasiFinansial',
+  langkahMitigasiAgunan: 'langkahMitigasiAgunan'
+} as const
+
+export type BeritaAcaraDeviasiOrderByRelevanceFieldEnum = (typeof BeritaAcaraDeviasiOrderByRelevanceFieldEnum)[keyof typeof BeritaAcaraDeviasiOrderByRelevanceFieldEnum]
+
+
+export const KeputusanKomiteFinalOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  rekomendasiAo: 'rekomendasiAo',
+  rekomendasiReviewer: 'rekomendasiReviewer',
+  keputusanDireksi: 'keputusanDireksi',
+  statusKeputusan: 'statusKeputusan'
+} as const
+
+export type KeputusanKomiteFinalOrderByRelevanceFieldEnum = (typeof KeputusanKomiteFinalOrderByRelevanceFieldEnum)[keyof typeof KeputusanKomiteFinalOrderByRelevanceFieldEnum]
+
+
+export const PersetujuanKreditKomiteOrderByRelevanceFieldEnum = {
+  id: 'id',
+  keputusanKomiteId: 'keputusanKomiteId',
+  userId: 'userId',
+  tingkatJabatanKomite: 'tingkatJabatanKomite',
+  opsiKeputusan: 'opsiKeputusan'
+} as const
+
+export type PersetujuanKreditKomiteOrderByRelevanceFieldEnum = (typeof PersetujuanKreditKomiteOrderByRelevanceFieldEnum)[keyof typeof PersetujuanKreditKomiteOrderByRelevanceFieldEnum]
+
+
+export const StrukturFasilitasDisetujuiOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  jenisFasilitas: 'jenisFasilitas',
+  asuransiJiwaKredit: 'asuransiJiwaKredit',
+  asuransiKerugianAgunan: 'asuransiKerugianAgunan',
+  sistemPencairanDana: 'sistemPencairanDana'
+} as const
+
+export type StrukturFasilitasDisetujuiOrderByRelevanceFieldEnum = (typeof StrukturFasilitasDisetujuiOrderByRelevanceFieldEnum)[keyof typeof StrukturFasilitasDisetujuiOrderByRelevanceFieldEnum]
+
+
+export const SyaratPencairanKreditOrderByRelevanceFieldEnum = {
+  id: 'id',
+  permohonanKreditId: 'permohonanKreditId',
+  kategoriSyarat: 'kategoriSyarat',
+  deskripsiSyarat: 'deskripsiSyarat'
+} as const
+
+export type SyaratPencairanKreditOrderByRelevanceFieldEnum = (typeof SyaratPencairanKreditOrderByRelevanceFieldEnum)[keyof typeof SyaratPencairanKreditOrderByRelevanceFieldEnum]
 
