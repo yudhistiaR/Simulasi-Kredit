@@ -1,18 +1,21 @@
-import { PrismaClient } from './generated/prisma/client.js'
+import { PrismaClient } from "./generated/prisma/client.js";
 
-import { PrismaMariaDb } from '@prisma/adapter-mariadb'
+import { PrismaMariaDb } from "@prisma/adapter-mariadb";
+
 const adapter = new PrismaMariaDb({
-  host: 'localhost',
-  port: 3306,
-  connectionLimit: 5,
-})
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+  connectionLimit: process.env.NODE_ENV === "production" ? 5 : 20,
+});
 
 declare global {
-  var __prisma: PrismaClient | undefined
+  var __prisma: PrismaClient | undefined;
 }
 
-export const prisma = globalThis.__prisma || new PrismaClient({ adapter })
+export const prisma = globalThis.__prisma || new PrismaClient({ adapter });
 
-if (process.env.NODE_ENV !== 'production') {
-  globalThis.__prisma = prisma
+if (process.env.NODE_ENV !== "production") {
+  globalThis.__prisma = prisma;
 }

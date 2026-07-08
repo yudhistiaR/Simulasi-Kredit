@@ -4,6 +4,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import appCss from "../styles.css?url";
 import { TooltipProvider } from "#/components/ui/tooltip";
+import { Toaster } from "#/components/ui/sonner";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -45,6 +46,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <TooltipProvider>{children}</TooltipProvider>
+        <Toaster position="top-right" swipeDirections={["left", "right"]} />
         <TanStackDevtools
           config={{
             position: "bottom-right",

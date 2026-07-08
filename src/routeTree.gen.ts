@@ -9,27 +9,41 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProtectedRouteImport } from './routes/_protected'
+import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProtectedDashboardRouteRouteImport } from './routes/_protected/dashboard/route'
 import { Route as ProtectedSystemIndexRouteImport } from './routes/_protected/system/index'
 import { Route as ProtectedDashboardIndexRouteImport } from './routes/_protected/dashboard/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthAuthLoginRouteImport } from './routes/_auth/auth.login'
+import { Route as ProtectedDashboardDebiturIndexRouteImport } from './routes/_protected/dashboard/debitur/index'
+import { Route as AuthAuthRegisterIndexRouteImport } from './routes/_auth/auth.register.index'
+import { Route as ProtectedDashboardAdminUserManagementRouteImport } from './routes/_protected/dashboard/_admin/user-management'
+import { Route as ProtectedDashboardDebiturNewIndexRouteImport } from './routes/_protected/dashboard/debitur/new.index'
 
+const ProtectedRoute = ProtectedRouteImport.update({
+  id: '/_protected',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProtectedDashboardRouteRoute = ProtectedDashboardRouteRouteImport.update({
-  id: '/_protected/dashboard',
+  id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ProtectedRoute,
 } as any)
 const ProtectedSystemIndexRoute = ProtectedSystemIndexRouteImport.update({
-  id: '/_protected/system/',
+  id: '/system/',
   path: '/system/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ProtectedRoute,
 } as any)
 const ProtectedDashboardIndexRoute = ProtectedDashboardIndexRouteImport.update({
   id: '/',
@@ -42,10 +56,33 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthAuthLoginRoute = AuthAuthLoginRouteImport.update({
-  id: '/_auth/auth/login',
+  id: '/auth/login',
   path: '/auth/login',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthRoute,
 } as any)
+const ProtectedDashboardDebiturIndexRoute =
+  ProtectedDashboardDebiturIndexRouteImport.update({
+    id: '/debitur/',
+    path: '/debitur/',
+    getParentRoute: () => ProtectedDashboardRouteRoute,
+  } as any)
+const AuthAuthRegisterIndexRoute = AuthAuthRegisterIndexRouteImport.update({
+  id: '/auth/register/',
+  path: '/auth/register/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const ProtectedDashboardAdminUserManagementRoute =
+  ProtectedDashboardAdminUserManagementRouteImport.update({
+    id: '/_admin/user-management',
+    path: '/user-management',
+    getParentRoute: () => ProtectedDashboardRouteRoute,
+  } as any)
+const ProtectedDashboardDebiturNewIndexRoute =
+  ProtectedDashboardDebiturNewIndexRouteImport.update({
+    id: '/debitur/new/',
+    path: '/debitur/new/',
+    getParentRoute: () => ProtectedDashboardRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +91,10 @@ export interface FileRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/': typeof ProtectedDashboardIndexRoute
   '/system/': typeof ProtectedSystemIndexRoute
+  '/dashboard/user-management': typeof ProtectedDashboardAdminUserManagementRoute
+  '/auth/register/': typeof AuthAuthRegisterIndexRoute
+  '/dashboard/debitur/': typeof ProtectedDashboardDebiturIndexRoute
+  '/dashboard/debitur/new/': typeof ProtectedDashboardDebiturNewIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,15 +102,25 @@ export interface FileRoutesByTo {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard': typeof ProtectedDashboardIndexRoute
   '/system': typeof ProtectedSystemIndexRoute
+  '/dashboard/user-management': typeof ProtectedDashboardAdminUserManagementRoute
+  '/auth/register': typeof AuthAuthRegisterIndexRoute
+  '/dashboard/debitur': typeof ProtectedDashboardDebiturIndexRoute
+  '/dashboard/debitur/new': typeof ProtectedDashboardDebiturNewIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/_protected': typeof ProtectedRouteWithChildren
   '/_protected/dashboard': typeof ProtectedDashboardRouteRouteWithChildren
   '/_auth/auth/login': typeof AuthAuthLoginRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_protected/dashboard/': typeof ProtectedDashboardIndexRoute
   '/_protected/system/': typeof ProtectedSystemIndexRoute
+  '/_protected/dashboard/_admin/user-management': typeof ProtectedDashboardAdminUserManagementRoute
+  '/_auth/auth/register/': typeof AuthAuthRegisterIndexRoute
+  '/_protected/dashboard/debitur/': typeof ProtectedDashboardDebiturIndexRoute
+  '/_protected/dashboard/debitur/new/': typeof ProtectedDashboardDebiturNewIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,28 +131,60 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/dashboard/'
     | '/system/'
+    | '/dashboard/user-management'
+    | '/auth/register/'
+    | '/dashboard/debitur/'
+    | '/dashboard/debitur/new/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth/login' | '/api/auth/$' | '/dashboard' | '/system'
+  to:
+    | '/'
+    | '/auth/login'
+    | '/api/auth/$'
+    | '/dashboard'
+    | '/system'
+    | '/dashboard/user-management'
+    | '/auth/register'
+    | '/dashboard/debitur'
+    | '/dashboard/debitur/new'
   id:
     | '__root__'
     | '/'
+    | '/_auth'
+    | '/_protected'
     | '/_protected/dashboard'
     | '/_auth/auth/login'
     | '/api/auth/$'
     | '/_protected/dashboard/'
     | '/_protected/system/'
+    | '/_protected/dashboard/_admin/user-management'
+    | '/_auth/auth/register/'
+    | '/_protected/dashboard/debitur/'
+    | '/_protected/dashboard/debitur/new/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ProtectedDashboardRouteRoute: typeof ProtectedDashboardRouteRouteWithChildren
-  AuthAuthLoginRoute: typeof AuthAuthLoginRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  ProtectedRoute: typeof ProtectedRouteWithChildren
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
-  ProtectedSystemIndexRoute: typeof ProtectedSystemIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_protected': {
+      id: '/_protected'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ProtectedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -114,14 +197,14 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof ProtectedDashboardRouteRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ProtectedRoute
     }
     '/_protected/system/': {
       id: '/_protected/system/'
       path: '/system'
       fullPath: '/system/'
       preLoaderRoute: typeof ProtectedSystemIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ProtectedRoute
     }
     '/_protected/dashboard/': {
       id: '/_protected/dashboard/'
@@ -142,18 +225,66 @@ declare module '@tanstack/react-router' {
       path: '/auth/login'
       fullPath: '/auth/login'
       preLoaderRoute: typeof AuthAuthLoginRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_protected/dashboard/debitur/': {
+      id: '/_protected/dashboard/debitur/'
+      path: '/debitur'
+      fullPath: '/dashboard/debitur/'
+      preLoaderRoute: typeof ProtectedDashboardDebiturIndexRouteImport
+      parentRoute: typeof ProtectedDashboardRouteRoute
+    }
+    '/_auth/auth/register/': {
+      id: '/_auth/auth/register/'
+      path: '/auth/register'
+      fullPath: '/auth/register/'
+      preLoaderRoute: typeof AuthAuthRegisterIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_protected/dashboard/_admin/user-management': {
+      id: '/_protected/dashboard/_admin/user-management'
+      path: '/user-management'
+      fullPath: '/dashboard/user-management'
+      preLoaderRoute: typeof ProtectedDashboardAdminUserManagementRouteImport
+      parentRoute: typeof ProtectedDashboardRouteRoute
+    }
+    '/_protected/dashboard/debitur/new/': {
+      id: '/_protected/dashboard/debitur/new/'
+      path: '/debitur/new'
+      fullPath: '/dashboard/debitur/new/'
+      preLoaderRoute: typeof ProtectedDashboardDebiturNewIndexRouteImport
+      parentRoute: typeof ProtectedDashboardRouteRoute
     }
   }
 }
 
+interface AuthRouteChildren {
+  AuthAuthLoginRoute: typeof AuthAuthLoginRoute
+  AuthAuthRegisterIndexRoute: typeof AuthAuthRegisterIndexRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthAuthLoginRoute: AuthAuthLoginRoute,
+  AuthAuthRegisterIndexRoute: AuthAuthRegisterIndexRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 interface ProtectedDashboardRouteRouteChildren {
   ProtectedDashboardIndexRoute: typeof ProtectedDashboardIndexRoute
+  ProtectedDashboardAdminUserManagementRoute: typeof ProtectedDashboardAdminUserManagementRoute
+  ProtectedDashboardDebiturIndexRoute: typeof ProtectedDashboardDebiturIndexRoute
+  ProtectedDashboardDebiturNewIndexRoute: typeof ProtectedDashboardDebiturNewIndexRoute
 }
 
 const ProtectedDashboardRouteRouteChildren: ProtectedDashboardRouteRouteChildren =
   {
     ProtectedDashboardIndexRoute: ProtectedDashboardIndexRoute,
+    ProtectedDashboardAdminUserManagementRoute:
+      ProtectedDashboardAdminUserManagementRoute,
+    ProtectedDashboardDebiturIndexRoute: ProtectedDashboardDebiturIndexRoute,
+    ProtectedDashboardDebiturNewIndexRoute:
+      ProtectedDashboardDebiturNewIndexRoute,
   }
 
 const ProtectedDashboardRouteRouteWithChildren =
@@ -161,12 +292,25 @@ const ProtectedDashboardRouteRouteWithChildren =
     ProtectedDashboardRouteRouteChildren,
   )
 
+interface ProtectedRouteChildren {
+  ProtectedDashboardRouteRoute: typeof ProtectedDashboardRouteRouteWithChildren
+  ProtectedSystemIndexRoute: typeof ProtectedSystemIndexRoute
+}
+
+const ProtectedRouteChildren: ProtectedRouteChildren = {
+  ProtectedDashboardRouteRoute: ProtectedDashboardRouteRouteWithChildren,
+  ProtectedSystemIndexRoute: ProtectedSystemIndexRoute,
+}
+
+const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
+  ProtectedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ProtectedDashboardRouteRoute: ProtectedDashboardRouteRouteWithChildren,
-  AuthAuthLoginRoute: AuthAuthLoginRoute,
+  AuthRoute: AuthRouteWithChildren,
+  ProtectedRoute: ProtectedRouteWithChildren,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
-  ProtectedSystemIndexRoute: ProtectedSystemIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
