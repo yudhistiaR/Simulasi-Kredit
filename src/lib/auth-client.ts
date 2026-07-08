@@ -2,6 +2,7 @@ import { createAuthClient } from "better-auth/react";
 import { adminClient, usernameClient } from "better-auth/client/plugins";
 import {
   ac,
+  admin,
   account_officer,
   direktur_kepatuhan,
   direktur_umum,
@@ -14,6 +15,7 @@ export const authClient = createAuthClient({
     adminClient({
       ac,
       roles: {
+        admin,
         account_officer,
         menrisk,
         pe_bisnis,
