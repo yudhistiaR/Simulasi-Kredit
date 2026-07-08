@@ -11,7 +11,7 @@ function RouteComponent() {
   const mutation = useMutation({
     mutationFn: async () => {
       const { data: user, error } = await authClient.signUp.email({
-        name: "admin",
+        name: "admin123",
         email: "admin@gmail.com",
         password: "rahasia110",
         username: "admin",
