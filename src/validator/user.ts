@@ -1,4 +1,13 @@
 import { z } from "zod";
+import type { UserRole } from "#/types/user";
+
+const validRoles: UserRole[] = [
+  "account_officer",
+  "menrisk",
+  "pe_bisnis",
+  "direktur_kepatuhan",
+  "direktur_umum",
+] as const;
 
 export const createUser = z.object({
   username: z
@@ -14,7 +23,7 @@ export const createUser = z.object({
     .string()
     .min(8, "Nama terlalu pendek")
     .max(20, "Nama terlalu panjang"),
-  role: z.string(),
+  role: z.enum(validRoles),
 });
 
 export type CreateUserInput = z.infer<typeof createUser>;
