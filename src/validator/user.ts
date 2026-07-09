@@ -26,4 +26,11 @@ export const createUser = z.object({
   role: z.enum(validRoles),
 });
 
+export const bannedUserValidation = z.object({
+  userId: z.string(),
+  banReason: z.string().max(100),
+  banExpiresIn: z.string(),
+});
+
 export type CreateUserInput = z.infer<typeof createUser>;
+export type BannedUserValidationInput = z.infer<typeof bannedUserValidation>;

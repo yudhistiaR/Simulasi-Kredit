@@ -1,5 +1,5 @@
 import { auth } from "#/lib/auth";
-import { createUser } from "#/validator/user";
+import { bannedUserValidation, createUser } from "#/validator/user";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
 import { z } from "zod";
@@ -57,6 +57,33 @@ export const deleteUserFn = createServerFn({ method: "POST" })
       return {
         success: false,
         message: error.message || "Gagal membuat penggunak baru",
+      };
+    }
+  });
+
+export const bannedUserFn = createServerFn({ method: "POST" })
+  .validator(bannedUserValidation)
+  .handler(async ({ data }) => {
+    const headers = getRequestHeaders();
+
+    try {
+      await auth.api.banUser({
+        body: {
+          userId: data.userId,
+          banReason: data.banReason,
+          banExpiresIn: Number(data.banExpiresIn),
+        },
+        headers,
+      });
+
+      return {
+        success: true,
+        message: "Banned pengguna berhasil",
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message || "Banned pengguna gagal",
       };
     }
   });
