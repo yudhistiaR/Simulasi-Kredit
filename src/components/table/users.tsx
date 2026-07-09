@@ -19,7 +19,14 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { ArrowDownAzIcon, ArrowUpZaIcon } from "lucide-react";
+import {
+	ArrowDownAzIcon,
+	ArrowUpZaIcon,
+	BanIcon,
+	EditIcon,
+	InfoIcon,
+	TrashIcon,
+} from "lucide-react";
 import { CreateUserSheet } from "../actions/create-user.sheet";
 
 type User = {
@@ -29,6 +36,7 @@ type User = {
 	role: string;
 	email: string;
 	updatedAt: Date;
+	createdAt: Date;
 };
 
 const columnHelper = createColumnHelper<User>();
@@ -59,6 +67,19 @@ const columns = [
 		header: "Role",
 		cell: (info) => info.getValue(),
 	}),
+	columnHelper.accessor("createdAt", {
+		header: "Tanggal Dibuat",
+		cell: (info) => {
+			const date = info.getValue();
+			return date
+				? date.toLocaleDateString("id-ID", {
+					day: "numeric",
+					month: "short",
+					year: "numeric",
+				})
+				: "-";
+		},
+	}),
 	columnHelper.accessor("updatedAt", {
 		header: "Perubahan Terakhir",
 		cell: (info) => {
@@ -70,6 +91,28 @@ const columns = [
 					year: "numeric",
 				})
 				: "-";
+		},
+	}),
+	columnHelper.display({
+		id: "action",
+		header: "Action",
+		cell: (info) => {
+			return (
+				<TableCell className="space-x-0.5">
+					<Button size="icon-xs">
+						<InfoIcon />
+					</Button>
+					<Button size="icon-xs">
+						<EditIcon />
+					</Button>
+					<Button size="icon-xs" variant="destructive">
+						<BanIcon />
+					</Button>
+					<Button size="icon-xs" variant="destructive">
+						<TrashIcon />
+					</Button>
+				</TableCell>
+			);
 		},
 	}),
 ];
@@ -121,6 +164,7 @@ export const UserTable = () => {
 					email: user.email,
 					role: user.role as string,
 					updatedAt: new Date(user.updatedAt),
+					createdAt: new Date(user.createdAt),
 				})),
 				total: rawData.total,
 			};
