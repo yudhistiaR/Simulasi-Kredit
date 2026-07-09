@@ -28,6 +28,7 @@ import {
 	TrashIcon,
 } from "lucide-react";
 import { CreateUserSheet } from "../actions/create-user.sheet";
+import { DeleteUserDialog } from "../actions/delete-user.alert";
 
 type User = {
 	id: string;
@@ -97,6 +98,8 @@ const columns = [
 		id: "action",
 		header: "Action",
 		cell: (info) => {
+			const data = info.row.original;
+
 			return (
 				<TableCell className="space-x-0.5">
 					<Button size="icon-xs">
@@ -108,9 +111,7 @@ const columns = [
 					<Button size="icon-xs" variant="destructive">
 						<BanIcon />
 					</Button>
-					<Button size="icon-xs" variant="destructive">
-						<TrashIcon />
-					</Button>
+					<DeleteUserDialog userId={data.id} />
 				</TableCell>
 			);
 		},
