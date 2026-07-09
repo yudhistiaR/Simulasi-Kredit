@@ -22,10 +22,9 @@ import { useState } from "react";
 import {
 	ArrowDownAzIcon,
 	ArrowUpZaIcon,
-	BanIcon,
 	EditIcon,
 	InfoIcon,
-	TrashIcon,
+	MonitorDotIcon,
 } from "lucide-react";
 import { CreateUserSheet } from "../actions/create-user.sheet";
 import { DeleteUserDialog } from "../actions/delete-user.alert";
@@ -35,6 +34,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { BannedUserDialog } from "../actions/banned-user.dialog";
 
 type User = {
 	id: string;
@@ -81,6 +81,8 @@ const columns = [
 		header: "Status",
 		cell: (info) => {
 			const status = info.getValue();
+			const data = info.row.original;
+
 			return (
 				<Tooltip>
 					<TooltipTrigger asChild>
@@ -89,7 +91,25 @@ const columns = [
 						</Badge>
 					</TooltipTrigger>
 					<TooltipContent side="bottom">
-						<p>Status Akun Aktif</p>
+						{status ? (
+							<>
+								<h2>Di Blokir Sampai</h2>
+								<p>
+									{data.banExpires
+										? data.banExpires.toLocaleDateString("id-ID", {
+											day: "numeric",
+											month: "short",
+											year: "numeric",
+										})
+										: "-"}
+								</p>
+								<br />
+								<h2>Alasan Pembelokiran</h2>
+								<p>{data.banReason ?? "-"}</p>
+							</>
+						) : (
+							"Pengguna Aktif"
+						)}
 					</TooltipContent>
 				</Tooltip>
 			);
@@ -102,10 +122,10 @@ const columns = [
 			const date = info.getValue();
 			return date
 				? date.toLocaleDateString("id-ID", {
-						day: "numeric",
-						month: "short",
-						year: "numeric",
-					})
+					day: "numeric",
+					month: "short",
+					year: "numeric",
+				})
 				: "-";
 		},
 	}),
@@ -115,10 +135,10 @@ const columns = [
 			const date = info.getValue();
 			return date
 				? date.toLocaleDateString("id-ID", {
-						day: "numeric",
-						month: "short",
-						year: "numeric",
-					})
+					day: "numeric",
+					month: "short",
+					year: "numeric",
+				})
 				: "-";
 		},
 	}),
@@ -138,13 +158,11 @@ const columns = [
 					</Button>
 					{data.role !== "admin" && (
 						<>
-							<Button
-								title="Banned Pengguna"
-								size="icon-xs"
-								variant="destructive"
-							>
-								<BanIcon />
-							</Button>
+							{data.banned ? (
+								<MonitorDotIcon />
+							) : (
+								<BannedUserDialog userId={data.id} />
+							)}
 							<DeleteUserDialog userId={data.id} />
 						</>
 					)}
