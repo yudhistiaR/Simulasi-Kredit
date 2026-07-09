@@ -29,6 +29,12 @@ import {
 } from "lucide-react";
 import { CreateUserSheet } from "../actions/create-user.sheet";
 import { DeleteUserDialog } from "../actions/delete-user.alert";
+import { Badge } from "../ui/badge";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type User = {
 	id: string;
@@ -36,6 +42,9 @@ type User = {
 	username: string;
 	role: string;
 	email: string;
+	banned: boolean | null;
+	banReason: string | undefined | null;
+	banExpires: Date | undefined | null;
 	updatedAt: Date;
 	createdAt: Date;
 };
@@ -68,16 +77,35 @@ const columns = [
 		header: "Role",
 		cell: (info) => info.getValue(),
 	}),
+	columnHelper.accessor("banned", {
+		header: "Status",
+		cell: (info) => {
+			const status = info.getValue();
+			return (
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<Badge variant={status ? "destructive" : "default"}>
+							{status ? "Banned" : "Active"}
+						</Badge>
+					</TooltipTrigger>
+					<TooltipContent side="bottom">
+						<p>Status Akun Aktif</p>
+					</TooltipContent>
+				</Tooltip>
+			);
+		},
+		enableSorting: false,
+	}),
 	columnHelper.accessor("createdAt", {
 		header: "Tanggal Dibuat",
 		cell: (info) => {
 			const date = info.getValue();
 			return date
 				? date.toLocaleDateString("id-ID", {
-					day: "numeric",
-					month: "short",
-					year: "numeric",
-				})
+						day: "numeric",
+						month: "short",
+						year: "numeric",
+					})
 				: "-";
 		},
 	}),
@@ -87,10 +115,10 @@ const columns = [
 			const date = info.getValue();
 			return date
 				? date.toLocaleDateString("id-ID", {
-					day: "numeric",
-					month: "short",
-					year: "numeric",
-				})
+						day: "numeric",
+						month: "short",
+						year: "numeric",
+					})
 				: "-";
 		},
 	}),
@@ -101,18 +129,26 @@ const columns = [
 			const data = info.row.original;
 
 			return (
-				<TableCell className="space-x-0.5">
-					<Button size="icon-xs">
+				<span className="space-x-0.5">
+					<Button title="Informasi Pengguna" size="icon-xs">
 						<InfoIcon />
 					</Button>
-					<Button size="icon-xs">
+					<Button title="Edit Pengguna" size="icon-xs">
 						<EditIcon />
 					</Button>
-					<Button size="icon-xs" variant="destructive">
-						<BanIcon />
-					</Button>
-					<DeleteUserDialog userId={data.id} />
-				</TableCell>
+					{data.role !== "admin" && (
+						<>
+							<Button
+								title="Banned Pengguna"
+								size="icon-xs"
+								variant="destructive"
+							>
+								<BanIcon />
+							</Button>
+							<DeleteUserDialog userId={data.id} />
+						</>
+					)}
+				</span>
 			);
 		},
 	}),
@@ -164,6 +200,9 @@ export const UserTable = () => {
 					name: user.name,
 					email: user.email,
 					role: user.role as string,
+					banned: user.banned,
+					banReason: user.banReason,
+					banExpires: user.banExpires,
 					updatedAt: new Date(user.updatedAt),
 					createdAt: new Date(user.createdAt),
 				})),
