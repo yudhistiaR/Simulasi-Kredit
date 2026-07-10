@@ -87,3 +87,32 @@ export const bannedUserFn = createServerFn({ method: "POST" })
       };
     }
   });
+
+export const unbannedUserFn = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      userId: z.string(),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const headers = getRequestHeaders();
+
+    try {
+      await auth.api.unbanUser({
+        body: {
+          userId: data.userId,
+        },
+        headers,
+      });
+
+      return {
+        success: true,
+        message: "Berhasil unblock pengguna",
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message || "Gagal unblock pengguna",
+      };
+    }
+  });

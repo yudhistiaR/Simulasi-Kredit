@@ -35,6 +35,7 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { BannedUserDialog } from "../actions/banned-user.dialog";
+import { UnbannedUserAlert } from "../actions/unbanned-user.alert";
 
 type User = {
 	id: string;
@@ -159,7 +160,7 @@ const columns = [
 					{data.role !== "admin" && (
 						<>
 							{data.banned ? (
-								<MonitorDotIcon />
+								<UnbannedUserAlert userId={data.id} />
 							) : (
 								<BannedUserDialog userId={data.id} />
 							)}
