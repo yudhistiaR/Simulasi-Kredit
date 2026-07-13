@@ -61,6 +61,32 @@ export const deleteUserFn = createServerFn({ method: "POST" })
     }
   });
 
+export const getUserFn = createServerFn({ method: "GET" }).handler(async () => {
+  const headers = getRequestHeaders();
+
+  try {
+    const data = await auth.api.getUser({
+      query: {
+        id: "okk",
+      },
+      headers,
+    });
+
+    console.log(data);
+
+    return {
+      data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || "Gagal membuat penggunak baru",
+    };
+  }
+});
+
+// Banner User
+
 export const bannedUserFn = createServerFn({ method: "POST" })
   .validator(bannedUserValidation)
   .handler(async ({ data }) => {
