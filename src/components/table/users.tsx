@@ -36,6 +36,8 @@ import {
 } from "@/components/ui/tooltip";
 import { BannedUserDialog } from "../actions/banned-user.dialog";
 import { UnbannedUserAlert } from "../actions/unbanned-user.alert";
+import { EditUserSheet } from "../actions/edit-user.sheet";
+import { UserInformationDialog } from "../actions/user-information.dialog";
 
 type User = {
 	id: string;
@@ -151,12 +153,7 @@ const columns = [
 
 			return (
 				<span className="space-x-0.5">
-					<Button title="Informasi Pengguna" size="icon-xs">
-						<InfoIcon />
-					</Button>
-					<Button title="Edit Pengguna" size="icon-xs">
-						<EditIcon />
-					</Button>
+					<UserInformationDialog userId={data.id} />
 					{data.role !== "admin" && (
 						<>
 							{data.banned ? (
