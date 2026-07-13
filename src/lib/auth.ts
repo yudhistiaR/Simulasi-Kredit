@@ -20,7 +20,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  trustedOrigins: ["http://192.168.11.33:3000"],
+  trustedOrigins: ["http://192.168.11.48:3000"],
   plugins: [
     tanstackStartCookies(),
     admin({
