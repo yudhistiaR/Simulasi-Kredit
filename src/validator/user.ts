@@ -7,6 +7,7 @@ const validRoles: UserRole[] = [
   "pe_bisnis",
   "direktur_kepatuhan",
   "direktur_umum",
+  "admin",
 ] as const;
 
 export const createUser = z.object({
@@ -25,6 +26,21 @@ export const createUser = z.object({
     .max(20, "Nama terlalu panjang"),
   role: z.enum(validRoles),
 });
+
+export const updateUserScheme = z.object({
+  username: z
+    .string()
+    .min(5, "Username minimal 5 karakter")
+    .max(18, "Username terlalu panjang"),
+  email: z.email("Email tidak valid"),
+  name: z
+    .string()
+    .min(5, "Nama minimal 5 karakter")
+    .max(35, "Nama terlalu panjang"),
+  role: z.enum(validRoles),
+});
+
+export const updateUser = updateUserScheme.partial();
 
 export const bannedUserValidation = z.object({
   userId: z.string(),
