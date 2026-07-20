@@ -19,8 +19,24 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { ArrowDownAzIcon, ArrowUpZaIcon } from "lucide-react";
+import {
+	ArrowDownAzIcon,
+	ArrowUpZaIcon,
+	EditIcon,
+	InfoIcon,
+	MonitorDotIcon,
+} from "lucide-react";
 import { CreateUserSheet } from "../actions/create-user.sheet";
+import { DeleteUserDialog } from "../actions/delete-user.alert";
+import { Badge } from "../ui/badge";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { BannedUserDialog } from "../actions/banned-user.dialog";
+import { UnbannedUserAlert } from "../actions/unbanned-user.alert";
+import { UserInformationDialog } from "../actions/user-information.dialog";
 
 type User = {
 	id: string;
@@ -28,7 +44,11 @@ type User = {
 	username: string;
 	role: string;
 	email: string;
+	banned: boolean | null;
+	banReason: string | undefined | null;
+	banExpires: Date | undefined | null;
 	updatedAt: Date;
+	createdAt: Date;
 };
 
 const columnHelper = createColumnHelper<User>();
@@ -59,6 +79,58 @@ const columns = [
 		header: "Role",
 		cell: (info) => info.getValue(),
 	}),
+	columnHelper.accessor("banned", {
+		header: "Status",
+		cell: (info) => {
+			const status = info.getValue();
+			const data = info.row.original;
+
+			return (
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<Badge variant={status ? "destructive" : "default"}>
+							{status ? "Banned" : "Active"}
+						</Badge>
+					</TooltipTrigger>
+					<TooltipContent side="bottom">
+						{status ? (
+							<>
+								<h2>Di Blokir Sampai</h2>
+								<p>
+									{data.banExpires
+										? data.banExpires.toLocaleDateString("id-ID", {
+											day: "numeric",
+											month: "short",
+											year: "numeric",
+										})
+										: "-"}
+								</p>
+								<br />
+								<h2>Alasan Pembelokiran</h2>
+								<p>{data.banReason ?? "-"}</p>
+							</>
+						) : (
+							"Pengguna Aktif"
+						)}
+					</TooltipContent>
+				</Tooltip>
+			);
+		},
+		enableSorting: false,
+	}),
+	columnHelper.accessor("createdAt", {
+		header: "Tanggal Dibuat",
+		cell: (info) => {
+			const date = info.getValue();
+			return date
+				? date.toLocaleDateString("id-ID", {
+					day: "numeric",
+					month: "short",
+					year: "numeric",
+				})
+				: "-";
+		},
+	}),
 	columnHelper.accessor("updatedAt", {
 		header: "Perubahan Terakhir",
 		cell: (info) => {
@@ -70,6 +142,29 @@ const columns = [
 					year: "numeric",
 				})
 				: "-";
+		},
+	}),
+	columnHelper.display({
+		id: "action",
+		header: "Action",
+		cell: (info) => {
+			const data = info.row.original;
+
+			return (
+				<span className="space-x-0.5">
+					<UserInformationDialog userId={data.id} />
+					{data.role !== "admin" && (
+						<>
+							{data.banned ? (
+								<UnbannedUserAlert userId={data.id} />
+							) : (
+								<BannedUserDialog userId={data.id} />
+							)}
+							<DeleteUserDialog userId={data.id} />
+						</>
+					)}
+				</span>
+			);
 		},
 	}),
 ];
@@ -120,7 +215,11 @@ export const UserTable = () => {
 					name: user.name,
 					email: user.email,
 					role: user.role as string,
+					banned: user.banned,
+					banReason: user.banReason,
+					banExpires: user.banExpires,
 					updatedAt: new Date(user.updatedAt),
+					createdAt: new Date(user.createdAt),
 				})),
 				total: rawData.total,
 			};

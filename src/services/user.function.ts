@@ -1,13 +1,12 @@
 import { auth } from "#/lib/auth";
-import { createUser } from "#/validator/user";
+import { bannedUserValidation, createUser } from "#/validator/user";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
+import { z } from "zod";
 
 export const createUserFn = createServerFn({ method: "POST" })
   .validator(createUser)
   .handler(async ({ data }) => {
-    const headers = getRequestHeaders();
-
     try {
       await auth.api.createUser({
         body: {
@@ -19,14 +18,127 @@ export const createUserFn = createServerFn({ method: "POST" })
             username: data.username,
           },
         },
+      });
+
+      return {
+        success: true,
+        message: "berhasil membuat penggunak baru",
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message || "Gagal membuat penggunak baru",
+      };
+    }
+  });
+
+export const deleteUserFn = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      userId: z.string("User id diperlukan"),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const headers = getRequestHeaders();
+
+    try {
+      await auth.api.removeUser({
+        body: {
+          userId: data.userId,
+        },
         headers,
       });
 
       return {
         success: true,
-        message: "Berhasil membuat penggunak baru",
+        message: "Pengguna berhasil dihapus",
       };
     } catch (error: any) {
-      console.log(error.message || "Internal server error");
+      return {
+        success: false,
+        message: error.message || "Gagal membuat penggunak baru",
+      };
+    }
+  });
+
+export const getUserFn = createServerFn({ method: "GET" }).handler(async () => {
+  const headers = getRequestHeaders();
+
+  try {
+    const data = await auth.api.getUser({
+      query: {
+        id: "okk",
+      },
+      headers,
+    });
+
+    console.log(data);
+
+    return {
+      data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || "Gagal membuat penggunak baru",
+    };
+  }
+});
+
+// Banner User
+
+export const bannedUserFn = createServerFn({ method: "POST" })
+  .validator(bannedUserValidation)
+  .handler(async ({ data }) => {
+    const headers = getRequestHeaders();
+
+    try {
+      await auth.api.banUser({
+        body: {
+          userId: data.userId,
+          banReason: data.banReason,
+          banExpiresIn: Number(data.banExpiresIn),
+        },
+        headers,
+      });
+
+      return {
+        success: true,
+        message: "Banned pengguna berhasil",
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message || "Banned pengguna gagal",
+      };
+    }
+  });
+
+export const unbannedUserFn = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      userId: z.string(),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const headers = getRequestHeaders();
+
+    try {
+      await auth.api.unbanUser({
+        body: {
+          userId: data.userId,
+        },
+        headers,
+      });
+
+      return {
+        success: true,
+        message: "Berhasil unblock pengguna",
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message || "Gagal unblock pengguna",
+      };
     }
   });

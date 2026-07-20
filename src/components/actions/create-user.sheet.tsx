@@ -18,7 +18,6 @@ import {
 import {
 	Select,
 	SelectContent,
-	SelectGroup,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
@@ -26,25 +25,77 @@ import {
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useForm } from "@tanstack/react-form-start";
-import { createUser } from "#/validator/user";
-
-const items = [
-	{ label: "Light", value: "light" },
-	{ label: "Dark", value: "dark" },
-	{ label: "System", value: "system" },
-];
+import {
+	createUser as createUserValidation,
+	type CreateUserInput,
+} from "#/validator/user";
+import { useState } from "react";
+import {
+	InputGroup,
+	InputGroupAddon,
+	InputGroupButton,
+	InputGroupInput,
+} from "../ui/input-group";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { createUserFn } from "#/services/user.function";
+import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import type { UserRole } from "#/types/user";
 
 export const CreateUserSheet = () => {
+	const [visibility, setVisibility] = useState<boolean>(false);
+
+	const createUser = useServerFn(createUserFn);
+	const queryClient = useQueryClient();
+
 	const form = useForm({
 		defaultValues: {
 			username: "",
 			name: "",
 			email: "",
 			password: "",
-			role: "user",
-		},
+			role: "account_officer",
+		} as CreateUserInput,
 		validators: {
-			onChange: createUser,
+			onChange: createUserValidation,
+		},
+		onSubmit: async ({ value, formApi }) => {
+			toast.promise(
+				async () => {
+					const response = await createUser({
+						data: {
+							name: value.name,
+							username: value.username,
+							email: value.email,
+							password: value.password,
+							role: value.role,
+						},
+					});
+
+					if (!response.success) throw new Error(response.message);
+
+					return response;
+				},
+				{
+					loading: "Loading...",
+					success: (data) => {
+						formApi.reset();
+
+						return {
+							message: "Registrasi Berhasil",
+							description: data?.message || "User berhasil terregistrasi",
+						};
+					},
+					error: (e) => {
+						return {
+							message: "Registrasi Gagal",
+							description: e.message || "User gagal terregistrasi",
+						};
+					},
+					finally: () => queryClient.invalidateQueries({ queryKey: ["users"] }),
+				},
+			);
 		},
 	});
 
@@ -61,6 +112,7 @@ export const CreateUserSheet = () => {
 					</SheetDescription>
 				</SheetHeader>
 				<form
+					id="create-user-form"
 					onSubmit={(e) => {
 						e.stopPropagation();
 						e.preventDefault();
@@ -70,6 +122,37 @@ export const CreateUserSheet = () => {
 				>
 					<FieldSet>
 						<FieldGroup>
+							<form.Field
+								name="username"
+								children={(field) => {
+									const isInvalid =
+										field.state.meta.isTouched && !field.state.meta.isValid;
+
+									return (
+										<Field data-invalid={isInvalid}>
+											<FieldLabel htmlFor={field.name}>Username</FieldLabel>
+											<Input
+												id={field.name}
+												name={field.name}
+												value={field.state.value}
+												onBlur={field.handleBlur}
+												onChange={(e) => field.handleChange(e.target.value)}
+												aria-invalid={isInvalid}
+												placeholder="Masukkan username"
+												autoComplete="off"
+											/>
+											{isInvalid ? (
+												<FieldError errors={field.state.meta.errors} />
+											) : (
+												<FieldDescription>
+													Akan di gunakna untuk login.
+												</FieldDescription>
+											)}
+										</Field>
+									);
+								}}
+							/>
+
 							<form.Field
 								name="name"
 								children={(field) => {
@@ -120,7 +203,7 @@ export const CreateUserSheet = () => {
 												onBlur={field.handleBlur}
 												onChange={(e) => field.handleChange(e.target.value)}
 												aria-invalid={isInvalid}
-												placeholder="kazumi@ex.com"
+												placeholder="Alamat Email"
 												autoComplete="off"
 												type="email"
 											/>
@@ -146,23 +229,31 @@ export const CreateUserSheet = () => {
 									return (
 										<Field data-invalid={isInvalid}>
 											<FieldLabel htmlFor={field.name}>Password</FieldLabel>
-											<Input
-												id={field.name}
-												name={field.name}
-												value={field.state.value}
-												onBlur={field.handleBlur}
-												onChange={(e) => field.handleChange(e.target.value)}
-												aria-invalid={isInvalid}
-												placeholder="********"
-												autoComplete="off"
-												type="password"
-											/>
+											<InputGroup>
+												<InputGroupInput
+													id={field.name}
+													name={field.name}
+													value={field.state.value}
+													onBlur={field.handleBlur}
+													onChange={(e) => field.handleChange(e.target.value)}
+													aria-invalid={isInvalid}
+													placeholder="********"
+													autoComplete="off"
+													type={visibility ? "text" : "password"}
+												/>
+												<InputGroupAddon align="inline-end">
+													<InputGroupButton
+														onClick={() => setVisibility(!visibility)}
+													>
+														{visibility ? <EyeIcon /> : <EyeOffIcon />}
+													</InputGroupButton>
+												</InputGroupAddon>
+											</InputGroup>
 											{isInvalid ? (
 												<FieldError errors={field.state.meta.errors} />
 											) : (
 												<FieldDescription>
-													Digunakan untuk login, notifikasi sistem, dan
-													pemulihan akun.
+													Minimal password 8 karakter
 												</FieldDescription>
 											)}
 										</Field>
@@ -182,7 +273,9 @@ export const CreateUserSheet = () => {
 											<Select
 												name={field.name}
 												value={field.state.value}
-												onValueChange={field.handleChange}
+												onValueChange={(value) =>
+													field.handleChange(value as UserRole)
+												}
 												defaultValue="account_officer"
 											>
 												<SelectTrigger id={field.name} aria-invalid={isInvalid}>
@@ -211,7 +304,20 @@ export const CreateUserSheet = () => {
 					</FieldSet>
 				</form>
 				<SheetFooter>
-					<Button>Simpan</Button>
+					<form.Subscribe
+						selector={(state) => [state.canSubmit, state.isSubmitting]}
+						children={([canSubmit, isSubmitting]) => (
+							<Field>
+								<Button
+									type="submit"
+									form="create-user-form"
+									disabled={!canSubmit}
+								>
+									{isSubmitting ? "Loading..." : "Simpan"}
+								</Button>
+							</Field>
+						)}
+					/>
 				</SheetFooter>
 			</SheetContent>
 		</Sheet>

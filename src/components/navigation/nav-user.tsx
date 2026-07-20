@@ -82,7 +82,7 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem className="capitalize text-sm">
                 <UserKeyIcon />
-                {user.role === "user"
+                {user.role === "account_officer"
                   ? `Rakyat Biasa (${user.role})`
                   : `Para Elite (${user.role})`}
               </DropdownMenuItem>

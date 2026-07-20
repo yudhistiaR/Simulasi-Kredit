@@ -46,7 +46,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <TooltipProvider>{children}</TooltipProvider>
-        <Toaster position="top-right" swipeDirections={["left", "right"]} />
+        <Toaster
+          position="top-right"
+          swipeDirections={["left", "right"]}
+          richColors
+        />
         <TanStackDevtools
           config={{
             position: "bottom-right",
